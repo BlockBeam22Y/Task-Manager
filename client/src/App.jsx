@@ -1,14 +1,19 @@
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
+import Calculator from './pages/Calculator'
 import Courses from './pages/Courses'
 import Reports from './pages/Reports'
+import Layout from './pages/Layout'
 
 function App() {
   return (
-    <div className='h-dvh flex flex-col'>
-      <Navbar/>
-      {/* <Reports/> */}
-      <Courses/>
-    </div>
+    <Routes>
+      <Route path='/' element={<Layout/>}>
+        <Route path='reports' element={<Reports/>} />
+        <Route path='reports/:id/courses' element={<Courses/>} />
+        <Route path='reports/:id/calculator' element={<Calculator/>} />
+      </Route>
+    </Routes>
   )
 }
 
