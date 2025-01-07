@@ -8,7 +8,7 @@ function ReportCard() {
             flex flex-col justify-end 
             shadow-md hover:shadow-lg cursor-pointer
         '>
-            <div className='bg-white p-2 gap-2 flex flex-col justify-between items-center'>
+            <div className='bg-white p-2 gap-1 flex flex-col justify-between items-center'>
                 <h3 className='w-full font-medium text-lg text-center text-nowrap text-ellipsis overflow-hidden'>
                     Semestre 2024-2
                 </h3>
