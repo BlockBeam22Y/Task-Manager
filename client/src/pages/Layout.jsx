@@ -13,7 +13,7 @@ function Layout() {
             <div className='flex grow'>
                 {showSidebar && <Sidebar/>}
 
-                <div className='flex flex-col items-center gap-8 py-8 grow'>
+                <div className='flex flex-col items-center gap-8 px-12 py-8 grow'>
                     <Outlet/>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 import CourseHeader from '../components/courses/CourseHeader';
 import CourseRow from '../components/courses/CourseRow';
 import NewCourse from '../components/courses/NewCourse';
-import Sidebar from '../components/layout/Sidebar';
 import courses from '../utils/courses';
 
 function Courses() {
@@ -12,7 +11,7 @@ function Courses() {
             <div className='relative'>
                 <CourseHeader/>
                 {
-                    courses.length > 0 ? (
+                    courses.length ? (
                         courses.map(course => <CourseRow course={course} />)
                     ) : (
                         <div className='w-full bg-white text-center border-2 border-t-0 border-primary-500 py-1.5'>

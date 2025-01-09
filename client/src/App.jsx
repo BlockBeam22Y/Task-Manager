@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/layout/Navbar'
 import Calculator from './pages/Calculator'
 import Courses from './pages/Courses'
 import Reports from './pages/Reports'
@@ -11,6 +10,7 @@ function App() {
       <Route path='/' element={<Layout/>}>
         <Route path='reports' element={<Reports/>} />
         <Route path='reports/:id/courses' element={<Courses/>} />
+        <Route path='reports/:id/calculator/:code' element={<Calculator/>} />
         <Route path='reports/:id/calculator' element={<Calculator/>} />
       </Route>
     </Routes>
