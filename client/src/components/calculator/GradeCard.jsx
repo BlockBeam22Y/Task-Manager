@@ -1,12 +1,19 @@
 import NewGrade from './NewGrade';
 
-function GradeCard({ grade }) {
+function GradeCard({ grade, handleOnClick }) {
     const { name, value, weight, children } = grade;
-    console.log(children)
 
     return (
         <div className='flex flex-col'>
-            <div className={`w-72 ${weight ? 'bg-white' : 'bg-gray-300 text-gray-600'} flex justify-between px-3 py-1 rounded shadow-md relative ${name !== 'Nota del curso' && 'mt-5'}`}>
+            <div 
+                onClick={() => handleOnClick(grade)}
+                className={`
+                w-72 px-3 py-1 hover:bg-gray-200 duration-200
+                ${weight ? 'bg-white' : 'bg-gray-300 text-gray-600'}
+                flex justify-between
+                rounded shadow-md cursor-pointer
+                relative ${name !== 'Nota del curso' && 'mt-5'}`}
+            >
                 <span>{ name }</span>
                 <span className='font-medium'>{ value }</span>
                 {
@@ -28,7 +35,7 @@ function GradeCard({ grade }) {
                         children && (
                             <>
                                 {
-                                    children.map(grade => <GradeCard grade={grade} />)
+                                    children.map(grade => <GradeCard grade={grade} handleOnClick={handleOnClick} />)
                                 }
 
                                 <div className='relative'>
