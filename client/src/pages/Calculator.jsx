@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import courses from '../utils/courses';
 import { useEffect, useState } from 'react';
+import GradeCard from '../components/calculator/GradeCard';
 
 function Calculator() {
     const { id, code } = useParams();
@@ -8,17 +9,14 @@ function Calculator() {
     const [selectedCode, setSelectedCode] = useState(code);
 
     useEffect(() => {
-        if (code) {
-            for (const course of courses) {
-                if (course.code === code)
-                    return;
-            }
-        } else if (courses.length) {
-            navigate(`/reports/${id}/calculator/${courses[0].code}`);
+        if (code && courses[code]) {
+            setSelectedCode(code);
+        } else if (Object.values(courses).length) {
+            navigate(`/reports/${id}/calculator/${Object.keys(courses)[0]}`);
         } else {
             navigate(`/reports/${id}/courses`);
         }
-    }, []);
+    }, [code]);
     
     const handleOnChange = (event) => {
         setSelectedCode(event.target.value);
@@ -29,16 +27,26 @@ function Calculator() {
         <>
             <h2 className='w-full text-center text-5xl font-medium'>Calculadora de notas</h2>
 
-            <div className='w-full bg-gray-300 px-12 py-1 flex items-center gap-3'>
+            <div className='w-full bg-gray-200 px-12 py-1 flex items-center gap-3'>
                 <span className='font-semibold'>Seleccione curso:</span>
 
                 <select onChange={handleOnChange} value={selectedCode} className='px-3 rounded-sm'>
                     {
-                        courses.map(course => (
+                        Object.values(courses).map(course => (
                             <option key={course.code} value={course.code}>{`${course.code} - ${course.name}`}</option>
                         ))
                     }
                 </select>
+            </div>
+
+            <div className='w-full flex justify-between'>
+                {
+                    courses[selectedCode] && <GradeCard grade={courses[selectedCode].grade}/>
+                }
+
+                <div>
+
+                </div>
             </div>
         </>
     );

@@ -10,10 +10,10 @@ function Layout() {
         <div className='h-dvh flex flex-col'>
             <Navbar/>
 
-            <div className='flex grow'>
+            <div className='flex grow min-h-0'>
                 {showSidebar && <Sidebar/>}
 
-                <div className='flex flex-col items-center gap-8 px-12 py-8 grow'>
+                <div className='flex flex-col items-center gap-8 px-12 py-8 grow overflow-y-auto'>
                     <Outlet/>
                 </div>
             </div>

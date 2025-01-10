@@ -11,8 +11,8 @@ function Courses() {
             <div className='relative'>
                 <CourseHeader/>
                 {
-                    courses.length ? (
-                        courses.map(course => <CourseRow course={course} />)
+                    Object.values(courses).length ? (
+                        Object.values(courses).map(course => <CourseRow course={course} />)
                     ) : (
                         <div className='w-full bg-white text-center border-2 border-t-0 border-primary-500 py-1.5'>
                             No se han encontrado cursos
