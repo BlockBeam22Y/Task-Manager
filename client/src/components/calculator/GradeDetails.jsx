@@ -1,5 +1,6 @@
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import BarChart from './BarChart';
+import TasksTable from './TasksTable';
 
 function GradeDetails({ grade, handleOnClick }) {
     const { name, value, weight, children } = grade;
@@ -64,10 +65,14 @@ function GradeDetails({ grade, handleOnClick }) {
             </div>
 
             <div className='flex flex-col gap-3'>
-                <h3 className='text-2xl font-medium'>Notas</h3>
+                <h3 className='text-2xl font-medium'>
+                    {
+                        children ? 'Notas' : 'Tareas'
+                    }
+                </h3>
                 
                 {
-                    children && <BarChart grade={grade} handleOnClick={handleOnClick}/>
+                    children ? <BarChart grade={grade} handleOnClick={handleOnClick}/> : <TasksTable />
                 }
             </div>
         </div>
