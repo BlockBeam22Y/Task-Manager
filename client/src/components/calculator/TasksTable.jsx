@@ -12,7 +12,13 @@ function TasksTable() {
             </div>
 
             {
-                tasks.map(task => <TaskRow task={task} />)
+                tasks.length ? (
+                    tasks.map(task => <TaskRow task={task} />)
+                ) : (
+                    <div className='py-1 border-b-2 border-gray-200 text-center'>
+                        No se han encontrado tareas
+                    </div>
+                )
             }
         </div>
     );

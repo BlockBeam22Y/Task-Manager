@@ -8,13 +8,13 @@ const tasks = [
     {
         name: 'Tarea 2',
         date: '06/11/2024',
-        time: '22:00',
+        time: '18:00',
         isCompleted: true,
     },
     {
         name: 'Tarea 3',
         date: '13/11/2024',
-        time: '22:00',
+        time: '14:00',
         isCompleted: false,
     },
     {
@@ -26,7 +26,7 @@ const tasks = [
     {
         name: 'Tarea 5',
         date: '14/11/2024',
-        time: '22:00',
+        time: '18:00',
         isCompleted: false,
     }
 ];
