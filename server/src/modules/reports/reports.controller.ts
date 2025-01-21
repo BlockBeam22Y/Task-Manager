@@ -11,9 +11,7 @@ export class ReportsController {
     }
 
     @Post()
-    async create(@Body() body) {
-        const { name, user_id } = body;
-
-        return this.reportsService.createReport(name, user_id);
+    async create(@Body('name') name) {
+        return this.reportsService.createReport(name);
     }
 }

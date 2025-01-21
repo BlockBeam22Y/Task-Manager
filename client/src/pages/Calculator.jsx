@@ -46,7 +46,7 @@ function Calculator() {
                 </select>
             </div>
 
-            <div className='w-full flex justify-between items-start'>
+            <div className='w-full flex justify-between items-start gap-24'>
                 {
                     courses[selectedCode] && <GradeCard grade={courses[selectedCode].grade} handleOnClick={handleOnClick}/>
                 }
