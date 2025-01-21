@@ -1,6 +1,8 @@
 import { SlOptionsVertical } from 'react-icons/sl'
 
-function ReportCard() {
+function ReportCard({ report }) {
+    const { name } = report;
+
     return (
         <a
             href='/reports/847f5420-bdd9-405a-b60a-ba333356384f/courses'
@@ -12,7 +14,7 @@ function ReportCard() {
         >
             <div className='bg-white p-2 gap-1 flex flex-col justify-between items-center'>
                 <h3 className='w-full font-medium text-lg text-center text-nowrap text-ellipsis overflow-hidden'>
-                    Semestre 2024-2
+                    { name }
                 </h3>
                 
                 <div className='w-full flex justify-between items-end text-gray-600'>

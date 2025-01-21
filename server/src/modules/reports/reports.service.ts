@@ -10,4 +10,13 @@ export class ReportsService {
     async getReports() {
         return this.reportsRepository.find();
     }
+
+    async createReport(name: string, id: string) {
+        const report = this.reportsRepository.create({
+            name,
+            user: { id }
+        });
+
+        return this.reportsRepository.save(report);
+    }
 }
