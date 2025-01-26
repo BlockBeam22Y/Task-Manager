@@ -8,7 +8,11 @@ export class UsersService {
     constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
     async getUsers() {
-        return this.usersRepository.find();
+        return this.usersRepository.find({
+            relations: {
+                reports: true
+            }
+        });
     }
 
     async createUser(name: string, email: string, password: string) {

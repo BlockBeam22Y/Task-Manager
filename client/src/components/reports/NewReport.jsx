@@ -3,12 +3,12 @@ import { FiPlus } from 'react-icons/fi'
 import { ModalContext } from '../../App';
 import CreateReportModal from '../modals/CreateReportModal';
 
-function NewReport({ loadReports }) {
+function NewReport({ loadUser }) {
     const setModal = useContext(ModalContext);
 
     return (
         <button
-            onClick={() => setModal(<CreateReportModal loadReports={loadReports}/>)}
+            onClick={() => setModal(<CreateReportModal loadUser={loadUser}/>)}
             className='
             w-56 h-56 rounded-2xl
             bg-gray-300 text-gray-600 opacity-60 hover:opacity-75 active:opacity-50

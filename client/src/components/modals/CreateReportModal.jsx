@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { ModalContext } from '../../App';
 import { PiWarningCircleFill } from 'react-icons/pi'
 
-function CreateReportModal({ loadReports }) {
+function CreateReportModal({ loadUser }) {
     const [name, setName] = useState('');
 
     const [isPending, setIsPending] = useState(false);
@@ -23,7 +23,7 @@ function CreateReportModal({ loadReports }) {
             .then(res => {
                 if (res.ok) {
                     setModal(null);
-                    loadReports();
+                    loadUser();
                 }
 
                 throw new Error('Something went wrong');
