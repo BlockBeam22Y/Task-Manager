@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 
 @Controller('courses')
@@ -8,5 +8,12 @@ export class CoursesController {
     @Get()
     async get() {
         return this.coursesService.getCourses();
+    }
+
+    @Post()
+    async create(@Body() body) {
+        const { name, code, credits, reportId } = body;
+        
+        return this.coursesService.createCourse({ name, code, credits, reportId });
     }
 }

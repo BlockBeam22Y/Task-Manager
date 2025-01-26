@@ -4,13 +4,10 @@ import { PiWarningCircleFill } from 'react-icons/pi'
 
 function CreateReportModal({ loadReports }) {
     const [name, setName] = useState('');
+
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
     const setModal = useContext(ModalContext);
-
-    const handleOnChange = (event) => {
-        setName(event.target.value);
-    };
 
     const handleOnSubmit = () => {
         setIsPending(true);
@@ -26,12 +23,11 @@ function CreateReportModal({ loadReports }) {
             .then(res => {
                 if (res.ok) {
                     setModal(null);
-                    return res.json();
+                    loadReports();
                 }
 
                 throw new Error('Something went wrong');
             })
-            .then(data => loadReports(data))
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));
     };
@@ -45,7 +41,7 @@ function CreateReportModal({ loadReports }) {
                 <input
                     type='text'
                     value={name}
-                    onChange={handleOnChange}
+                    onChange={(event) => setName(event.target.value)}
                     className='w-64 h-7 border border-black/25 rounded px-2'
                 />
             </div>

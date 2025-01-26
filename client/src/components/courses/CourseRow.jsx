@@ -3,7 +3,7 @@ import { FaEye } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom';
 
 function CourseRow({ course }) {
-    const { code, name, credits, grade } = course;
+    const { code, name, credits, grades } = course;
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -20,8 +20,8 @@ function CourseRow({ course }) {
             <div className='w-96 py-1.5 text-center'>{ name }</div>
             <div className='w-32 py-1.5 text-center'>{ credits }</div>
             <div className='w-32 py-1.5 flex justify-center items-center'>
-                <span className={`${grade.value < 10 ? 'bg-red-600' : 'bg-lime-600'} text-white font-bold text-xs px-2 py-1 rounded-md`}>
-                    { grade.value }
+                <span className={`${grades.at(0).value < 10 ? 'bg-red-600' : 'bg-lime-600'} text-white font-bold text-xs px-2 py-1 rounded-md`}>
+                    { grades.at(0).value }
                 </span>
             </div>
             <div className='w-48 py-1.5 flex justify-center items-center'>

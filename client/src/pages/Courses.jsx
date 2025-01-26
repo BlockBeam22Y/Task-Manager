@@ -4,7 +4,7 @@ import CourseRow from '../components/courses/CourseRow';
 import NewCourse from '../components/courses/NewCourse';
 
 function Courses() {
-    const { courses } = useOutletContext();
+    const { selectedReport, loadReport } = useOutletContext();
 
     return (
         <>
@@ -13,15 +13,15 @@ function Courses() {
             <div className='relative'>
                 <CourseHeader/>
                 {
-                    Object.values(courses).length ? (
-                        Object.values(courses).map(course => <CourseRow course={course} />)
+                    selectedReport.courses.length ? (
+                        selectedReport.courses.map(course => <CourseRow course={course} />)
                     ) : (
                         <div className='w-full bg-white text-center border-2 border-t-0 border-primary-500 py-1.5'>
                             No se han encontrado cursos
                         </div>
                     )
                 }
-                <NewCourse/>
+                <NewCourse loadReport={loadReport} />
             </div>
         </>
     );

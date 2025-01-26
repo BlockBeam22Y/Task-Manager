@@ -11,7 +11,7 @@ function Layout({ modal }) {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const loadReport = () => {
+    const loadReport = (id) => {
         if (!id) return;
 
         fetch(`http://localhost:3000/reports/${id}`)
@@ -26,7 +26,7 @@ function Layout({ modal }) {
             .then(data => setSelectedReport(data));
     };
 
-    useEffect(loadReport, []);
+    useEffect(() => loadReport(id), [id]);
 
     return (
         <div className='h-dvh flex flex-col'>
@@ -36,7 +36,7 @@ function Layout({ modal }) {
                 {selectedReport && <Sidebar report={selectedReport}/>}
 
                 <div className='flex flex-col items-center gap-8 px-12 py-8 grow overflow-y-auto'>
-                    {(!id === !selectedReport) && <Outlet context={selectedReport}/>}
+                    {(!id === !selectedReport) && <Outlet context={{selectedReport, loadReport}}/>}
                 </div>
             </div>
             

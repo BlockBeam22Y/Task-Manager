@@ -16,12 +16,29 @@ export class ReportsService {
     }
 
     async getReportById(id: string) {
-        return this.reportsRepository.findOne({
+        const report = await this.reportsRepository.findOne({
             where: { id },
             relations: {
-                courses: true
+                courses: {
+                    grades: true
+                }
             }
         });
+        
+        for (let i = 0; i < report.courses.length; i++) {
+            const { grades, ...course } = report.courses[i];
+
+            for (const grade of grades) {
+                if (!grade.parent) {
+                    report.courses[i] = {
+                        ...course,
+                        grades: [grade],
+                    };
+                }
+            }
+        }
+
+        return report;
     }
 
     async createReport(name: string) {
@@ -32,8 +49,6 @@ export class ReportsService {
             user: users.at(0)
         });
 
-        await this.reportsRepository.save(report);
-
-        return this.reportsRepository.find();
+        return this.reportsRepository.save(report);
     }
 }

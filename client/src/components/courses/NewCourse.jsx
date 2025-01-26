@@ -1,8 +1,15 @@
+import { useContext } from 'react';
 import { FiPlus } from 'react-icons/fi'
+import { ModalContext } from '../../App';
+import CreateCourseModal from '../modals/CreateCourseModal';
 
-function NewCourse() {
+function NewCourse({ loadReport }) {
+    const setModal = useContext(ModalContext);
+
     return (
-        <button className='
+        <button 
+            onClick={() => setModal(<CreateCourseModal loadReport={loadReport}/>)}
+            className='
             bg-primary-500 text-white font-medium
             hover:bg-primary-600 active:bg-primary-400
             hover:text-gray-100 active:text-white
