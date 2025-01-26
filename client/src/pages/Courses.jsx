@@ -1,9 +1,11 @@
+import { useOutletContext } from 'react-router-dom';
 import CourseHeader from '../components/courses/CourseHeader';
 import CourseRow from '../components/courses/CourseRow';
 import NewCourse from '../components/courses/NewCourse';
-import courses from '../utils/courses';
 
 function Courses() {
+    const { courses } = useOutletContext();
+
     return (
         <>
             <h2 className='w-full text-center text-5xl font-medium'>Cursos</h2>

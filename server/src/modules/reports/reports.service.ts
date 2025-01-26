@@ -15,6 +15,15 @@ export class ReportsService {
         return this.reportsRepository.find();
     }
 
+    async getReportById(id: string) {
+        return this.reportsRepository.findOne({
+            where: { id },
+            relations: {
+                courses: true
+            }
+        });
+    }
+
     async createReport(name: string) {
         const users = await this.usersRepository.find();
 

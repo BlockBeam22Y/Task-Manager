@@ -1,13 +1,12 @@
-import { useParams } from 'react-router-dom';
 import { FaBook } from 'react-icons/fa';
 import { IoIosCalculator } from 'react-icons/io'
 
-function Sidebar() {
-    const { id } = useParams();
+function Sidebar({ report }) {
+    const { id, name } = report;
 
     return (
         <aside className='w-48 h-full bg-white shadow-md flex flex-col'>
-            <h3 className='bg-primary-500 text-white font-medium p-4'>Semestre 2024-2</h3>
+            <h3 className='bg-primary-500 text-white font-medium p-4'>{ name }</h3>
             
             <a href={`/reports/${id}/courses`} className='px-4 py-2 hover:bg-gray-100 active:bg-gray-200 flex items-center gap-2'>
                 <FaBook className='w-5 h-5'/>

@@ -1,11 +1,11 @@
 import { SlOptionsVertical } from 'react-icons/sl'
 
 function ReportCard({ report }) {
-    const { name } = report;
+    const { name, id } = report;
 
     return (
         <a
-            href='/reports/847f5420-bdd9-405a-b60a-ba333356384f/courses'
+            href={`/reports/${id}/courses`}
             className='
                 w-56 h-56 
                 bg-[#A294F9]
