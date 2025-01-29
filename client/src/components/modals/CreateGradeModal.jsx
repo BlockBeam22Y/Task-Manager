@@ -1,50 +1,38 @@
 import { useContext, useState } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { ModalContext } from '../../App';
-import { useParams } from 'react-router-dom';
 import { PiWarningCircleFill } from 'react-icons/pi';
+import Toggle from '../../utils/Toggle';
 
-function CreateCourseModal({ loadReport }) {
-    const [formData, setFormData] = useState({
-        name: '',
-        code: ''
-    });
-    const [credits, setCredits] = useState(1);
+function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
+    const [name, setName] = useState('');
+    const [weight, setWeight] = useState(1);
+    const [isChecked, setIsChecked] = useState(false);
 
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
     const setModal = useContext(ModalContext);
 
-    const { id } = useParams();
-
-    const handleOnChange = (event) => {
-        const { name, value } = event.target;
-
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    }
-
     const handleOnSubmit = () => {
         setIsPending(true);
         setIsError(false);
 
-        fetch('http://localhost:3000/courses', {
+        fetch('http://localhost:3000/grades', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                ...formData,
-                credits,
-                reportId: id,
+                name,
+                weight,
+                isAverage: isChecked,
+                parentId: grade.id
             })
         })
             .then(res => {
                 if (res.ok) {
                     setModal(null);
-                    loadReport(id);
+                    loadCourseGrades(rootId);
                 }
                 
                 throw new Error('Something went wrong');
@@ -55,38 +43,26 @@ function CreateCourseModal({ loadReport }) {
     
     return (
         <>
-            <h3 className='font-bold text-2xl border-b pb-2'>Nuevo Curso</h3>
+            <h3 className='font-bold text-2xl border-b pb-2'>Nueva Nota</h3>
 
             <div className='flex items-center gap-2'>
                 <label className='font-medium'>Nombre:</label>
                 <input
                     type='text'
-                    name='name'
-                    value={formData.name}
-                    onChange={handleOnChange}
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
                     className='grow h-7 border border-black/25 rounded px-2'
                 />
             </div>
 
             <div className='flex items-center gap-8'>
                 <div className='flex items-center gap-2'>
-                    <label className='font-medium'>Código:</label>
-                    <input
-                        type='text'
-                        name='code'
-                        value={formData.code}
-                        onChange={handleOnChange}
-                        className='w-24 h-7 border border-black/25 rounded px-2'
-                    />
-                </div>
-
-                <div className='flex items-center gap-2'>
-                    <label className='font-medium'>Créditos:</label>
+                    <label className='font-medium'>Peso:</label>
 
                     <div className='relative'>
                         <button 
-                            onClick={() => setCredits(credits - 1)}
-                            disabled={credits === 1}
+                            onClick={() => setWeight(weight - 1)}
+                            disabled={weight === 1}
                             className='
                             w-7 h-7
                             bg-gray-300 text-gray-600
@@ -104,11 +80,11 @@ function CreateCourseModal({ loadReport }) {
                             type='number'
                             className='w-24 h-7 text-center border border-black/25 rounded'
                             disabled
-                            value={credits}
+                            value={weight}
                         />
 
                         <button
-                            onClick={() => setCredits(credits + 1)}
+                            onClick={() => setWeight(weight + 1)}
                             className='
                             w-7 h-7
                             bg-gray-300 text-gray-600
@@ -123,6 +99,12 @@ function CreateCourseModal({ loadReport }) {
                         </button>
                     </div>
                 </div>
+
+                <label className='flex items-center gap-2'>
+                    <Toggle isChecked={isChecked} setIsChecked={setIsChecked}/>
+
+                    <span>Calcular como promedio</span>
+                </label>
             </div>
             
             {
@@ -137,11 +119,7 @@ function CreateCourseModal({ loadReport }) {
             <div className='flex justify-center'>
                 <button
                     onClick={handleOnSubmit}
-                    disabled={
-                        !formData.name ||
-                        !formData.code ||
-                        isPending
-                    }
+                    disabled={!name || isPending}
                     className='
                     bg-primary-500 text-white font-medium
                     hover:bg-primary-600 hover:text-gray-100
@@ -157,4 +135,4 @@ function CreateCourseModal({ loadReport }) {
     );
 }
 
-export default CreateCourseModal;
+export default CreateGradeModal;

@@ -35,6 +35,7 @@ export class CoursesService {
             name: 'Nota del curso',
             value: 0,
             weight: 1,
+            isAverage: true,
             course
         });
 

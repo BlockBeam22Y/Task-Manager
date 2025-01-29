@@ -12,6 +12,24 @@ export class GradesService {
             id: rootId
         });
 
-        return this.gradesRepository.findDescendantsTree(rootGrade);
+        return this.gradesRepository.findDescendantsTree(rootGrade, {
+            relations: ['parent']
+        });
+    }
+
+    async createGrade({ name, weight, isAverage, parentId }) {
+        const parentGrade = await this.gradesRepository.findOneBy({
+            id: parentId
+        });
+
+        const grade = this.gradesRepository.create({
+            name,
+            weight,
+            value: 0,
+            isAverage,
+            parent: parentGrade
+        })
+
+        await this.gradesRepository.save(grade);
     }
 }

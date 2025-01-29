@@ -1,7 +1,7 @@
 import NewGrade from './NewGrade';
 
-function GradeCard({ grade, handleOnClick }) {
-    const { name, value, weight, children } = grade;
+function GradeCard({ grade, handleOnClick, loadCourseGrades, rootId }) {
+    const { name, value, weight, children, isAverage } = grade;
 
     return (
         <div className='flex flex-col'>
@@ -27,19 +27,31 @@ function GradeCard({ grade, handleOnClick }) {
 
             <div className='flex'>
                 <div className='w-10 flex'>
-                    <div className={`w-5 border-r border-black ${children && 'mb-4'}`}></div>
+                    <div className={`w-5 border-r border-black ${isAverage && 'mb-4'}`}></div>
                 </div>
 
                 <div className='flex flex-col'>
                     {
-                        children && (
+                        isAverage && (
                             <>
                                 {
-                                    children.map(grade => <GradeCard grade={grade} handleOnClick={handleOnClick} />)
+                                    children.map(childGrade => (
+                                        <GradeCard 
+                                            key={childGrade.id}
+                                            grade={childGrade} 
+                                            handleOnClick={handleOnClick}
+                                            loadCourseGrades={loadCourseGrades}
+                                            rootId={rootId ?? grade.id}
+                                        />
+                                    ))
                                 }
 
                                 <div className='relative'>
-                                    <NewGrade/>
+                                    <NewGrade
+                                        grade={grade} 
+                                        loadCourseGrades={loadCourseGrades}
+                                        rootId={rootId ?? grade.id}
+                                    />
                                     <div className='absolute -left-5 bottom-4 w-5 border-b border-black'/>
                                 </div>
                             </>

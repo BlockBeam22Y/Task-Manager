@@ -19,6 +19,12 @@ export class Grade {
     @Column('integer')
     weight: number;
 
+    @Column({
+        name: 'is_average',
+        default: false
+    })
+    isAverage: boolean;
+
     @TreeChildren()
     children: Grade[];
 

@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
 import { useContext, useEffect, useState } from 'react';
@@ -9,16 +9,13 @@ function Layout({ modal }) {
     const setModal = useContext(ModalContext);
     const [selectedReport, setSelectedReport] = useState(null);
     const { id } = useParams();
-    const navigate = useNavigate();
 
     const loadReport = (id) => {
         if (!id) return;
 
         fetch(`http://localhost:3000/reports/${id}`)
             .then(res => {
-                if (res.status === 404)
-                    navigate('/reports');
-                else if (!res.ok) 
+                if (!res.ok) 
                     throw new Error('Something went wrong');
 
                 return res.json()

@@ -12,21 +12,25 @@ function Calculator() {
     const [selectedRoot, setSelectedRoot] = useState(null);
     const [selectedGrade, setSelectedGrade] = useState(null);
 
+    const loadCourseGrades = (rootId) => {
+        fetch(`http://localhost:3000/grades/${rootId}`)
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+
+                throw new Error('Something went wrong');
+            })
+            .then(data => {
+                setSelectedRoot(data);
+                setSelectedGrade(data);
+            });
+    };
+
     useEffect(() => {
         if (code && courses[code]) {
             const rootId = courses[code].grades.at(0).id;
 
-            fetch(`http://localhost:3000/grades/${rootId}`)
-                .then(res => {
-                    if (res.ok)
-                        return res.json();
-
-                    throw new Error('Something went wrong');
-                })
-                .then(data => {
-                    setSelectedRoot(data);
-                    setSelectedGrade(data);
-                })
+            loadCourseGrades(rootId)            
         } else if (Object.values(courses).length) {
             navigate(`/reports/${id}/calculator/${Object.keys(courses)[0]}`);
         } else {
@@ -58,9 +62,15 @@ function Calculator() {
                 </select>
             </div>
 
-            <div className='w-full flex justify-between items-start gap-24 flex-wrap'>
+            <div className='w-full flex justify-evenly items-start gap-24 flex-wrap'>
                 {
-                    selectedRoot && <GradeCard grade={selectedRoot} handleOnClick={handleOnClick}/>
+                    selectedRoot && (
+                        <GradeCard 
+                            grade={selectedRoot} 
+                            handleOnClick={handleOnClick}
+                            loadCourseGrades={loadCourseGrades}
+                        />
+                    )
                 }
 
                 {

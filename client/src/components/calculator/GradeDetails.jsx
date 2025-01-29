@@ -3,7 +3,7 @@ import BarChart from './BarChart';
 import TasksTable from './TasksTable';
 
 function GradeDetails({ grade, handleOnClick }) {
-    const { name, value, weight, children, parent } = grade;
+    const { name, value, weight, isAverage, parent } = grade;
 
     return (
         <div className='px-8 py-4 bg-white shadow-md flex flex-col gap-6'>
@@ -57,8 +57,8 @@ function GradeDetails({ grade, handleOnClick }) {
 
                         <input
                             type='number'
-                            className={`w-24 h-7 text-center border border-black/25 rounded ${children && 'bg-gray-300 text-gray-600'}`}
-                            disabled={children}
+                            className={`w-24 h-7 text-center border border-black/25 rounded ${isAverage && 'bg-gray-300 text-gray-600'}`}
+                            disabled={isAverage}
                             value={value} />
                     </div>
                 </div>
@@ -67,12 +67,12 @@ function GradeDetails({ grade, handleOnClick }) {
             <div className='flex flex-col gap-3'>
                 <h3 className='text-2xl font-medium'>
                     {
-                        children ? 'Notas' : 'Tareas'
+                        isAverage ? 'Notas' : 'Tareas'
                     }
                 </h3>
                 
                 {
-                    children ? <BarChart grade={grade} handleOnClick={handleOnClick}/> : <TasksTable />
+                    isAverage ? <BarChart grade={grade} handleOnClick={handleOnClick}/> : <TasksTable />
                 }
             </div>
         </div>

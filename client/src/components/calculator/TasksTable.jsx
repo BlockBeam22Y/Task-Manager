@@ -13,7 +13,7 @@ function TasksTable() {
 
             {
                 tasks.length ? (
-                    tasks.map(task => <TaskRow task={task} />)
+                    tasks.map((task, i) => <TaskRow key={i} task={task} />)
                 ) : (
                     <div className='py-1 border-b-2 border-gray-200 text-center'>
                         No se han encontrado tareas
