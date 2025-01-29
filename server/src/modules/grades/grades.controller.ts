@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { GradesService } from './grades.service';
 
 @Controller('grades')
 export class GradesController {
     constructor(private readonly gradesService: GradesService) {}
 
-    @Get()
-    async get() {
-        return this.gradesService.getGrades();
+    @Get('/:rootId')
+    async getByRoot(@Param('rootId') rootId: string) {
+        return this.gradesService.getGradesByRoot(rootId);
     }
 }

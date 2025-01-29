@@ -23,7 +23,13 @@ function Layout({ modal }) {
 
                 return res.json()
             })
-            .then(data => setSelectedReport(data));
+            .then(({ courses, ...data }) => setSelectedReport({
+                ...data,
+                courses: courses.reduce((acc, course) => ({
+                    ...acc,
+                    [course.code]: course
+                }), {})
+            }));
     };
 
     useEffect(() => loadReport(id), [id]);

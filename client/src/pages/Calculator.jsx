@@ -1,19 +1,32 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import courses from '../utils/courses';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import GradeCard from '../components/calculator/GradeCard';
 import GradeDetails from '../components/calculator/GradeDetails';
 
 function Calculator() {
+    const { selectedReport: { courses } } = useOutletContext();
+
     const { id, code } = useParams();
     const navigate = useNavigate();
-    const [selectedCode, setSelectedCode] = useState(code);
+    
+    const [selectedRoot, setSelectedRoot] = useState(null);
     const [selectedGrade, setSelectedGrade] = useState(null);
 
     useEffect(() => {
         if (code && courses[code]) {
-            setSelectedCode(code);
-            setSelectedGrade(courses[code].grade)
+            const rootId = courses[code].grades.at(0).id;
+
+            fetch(`http://localhost:3000/grades/${rootId}`)
+                .then(res => {
+                    if (res.ok)
+                        return res.json();
+
+                    throw new Error('Something went wrong');
+                })
+                .then(data => {
+                    setSelectedRoot(data);
+                    setSelectedGrade(data);
+                })
         } else if (Object.values(courses).length) {
             navigate(`/reports/${id}/calculator/${Object.keys(courses)[0]}`);
         } else {
@@ -22,7 +35,6 @@ function Calculator() {
     }, [code]);
     
     const handleOnChange = (event) => {
-        setSelectedCode(event.target.value);
         navigate(`/reports/${id}/calculator/${event.target.value}`);
     };
 
@@ -37,7 +49,7 @@ function Calculator() {
             <div className='w-full bg-gray-200 px-12 py-1 flex items-center gap-3'>
                 <span className='font-semibold'>Seleccione curso:</span>
 
-                <select onChange={handleOnChange} value={selectedCode} className='px-3 rounded-sm'>
+                <select onChange={handleOnChange} className='px-3 rounded-sm'>
                     {
                         Object.values(courses).map(course => (
                             <option key={course.code} value={course.code}>{`${course.code} - ${course.name}`}</option>
@@ -46,9 +58,9 @@ function Calculator() {
                 </select>
             </div>
 
-            <div className='w-full flex justify-between items-start gap-24'>
+            <div className='w-full flex justify-between items-start gap-24 flex-wrap'>
                 {
-                    courses[selectedCode] && <GradeCard grade={courses[selectedCode].grade} handleOnClick={handleOnClick}/>
+                    selectedRoot && <GradeCard grade={selectedRoot} handleOnClick={handleOnClick}/>
                 }
 
                 {

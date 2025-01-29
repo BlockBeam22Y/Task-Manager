@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Grade } from './grades.entity';
-import { Repository } from 'typeorm';
+import { TreeRepository } from 'typeorm';
 
 @Injectable()
 export class GradesService {
-    constructor(@InjectRepository(Grade) private readonly gradesRepository: Repository<Grade>) {}
+    constructor(@InjectRepository(Grade) private readonly gradesRepository: TreeRepository<Grade>) {}
 
-    async getGrades() {
-        return this.gradesRepository.find();
+    async getGradesByRoot(rootId: string) {
+        const rootGrade = await this.gradesRepository.findOneBy({
+            id: rootId
+        });
+
+        return this.gradesRepository.findDescendantsTree(rootGrade);
     }
 }

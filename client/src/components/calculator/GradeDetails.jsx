@@ -3,7 +3,7 @@ import BarChart from './BarChart';
 import TasksTable from './TasksTable';
 
 function GradeDetails({ grade, handleOnClick }) {
-    const { name, value, weight, children } = grade;
+    const { name, value, weight, children, parent } = grade;
 
     return (
         <div className='px-8 py-4 bg-white shadow-md flex flex-col gap-6'>
@@ -19,7 +19,7 @@ function GradeDetails({ grade, handleOnClick }) {
 
                         <div className='relative'>
                             <button 
-                                disabled={name === 'Nota del curso' || weight === 0}
+                                disabled={!parent || weight === 0}
                                 className='
                                 w-7 h-7
                                 bg-gray-300 text-gray-600
@@ -36,7 +36,7 @@ function GradeDetails({ grade, handleOnClick }) {
                             <input type='number' className='w-24 h-7 text-center border border-black/25 rounded' disabled value={weight} />
 
                             <button
-                                disabled={name === 'Nota del curso'}
+                                disabled={!parent}
                                 className='
                                 w-7 h-7
                                 bg-gray-300 text-gray-600

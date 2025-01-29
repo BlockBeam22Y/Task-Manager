@@ -5,6 +5,7 @@ import NewCourse from '../components/courses/NewCourse';
 
 function Courses() {
     const { selectedReport, loadReport } = useOutletContext();
+    const courses = Object.values(selectedReport.courses);
 
     return (
         <>
@@ -13,8 +14,8 @@ function Courses() {
             <div className='relative'>
                 <CourseHeader/>
                 {
-                    selectedReport.courses.length ? (
-                        selectedReport.courses.map(course => <CourseRow course={course} />)
+                    courses.length ? (
+                        courses.map(course => <CourseRow key={course.id} course={course} />)
                     ) : (
                         <div className='w-full bg-white text-center border-2 border-t-0 border-primary-500 py-1.5'>
                             No se han encontrado cursos
