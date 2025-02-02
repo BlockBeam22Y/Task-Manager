@@ -21,12 +21,11 @@ function CreateReportModal({ loadUser }) {
             body: JSON.stringify({ name })
         })
             .then(res => {
-                if (res.ok) {
-                    setModal(null);
-                    loadUser();
-                }
-
-                throw new Error('Something went wrong');
+                if (!res.ok) 
+                    throw new Error('Something went wrong');
+                
+                setModal(null);
+                loadUser();
             })
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));

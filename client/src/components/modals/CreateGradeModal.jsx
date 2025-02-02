@@ -30,12 +30,11 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
             })
         })
             .then(res => {
-                if (res.ok) {
-                    setModal(null);
-                    loadCourseGrades(rootId);
-                }
-                
-                throw new Error('Something went wrong');
+                if (!res.ok) 
+                    throw new Error('Something went wrong');
+            
+                setModal(null);
+                loadCourseGrades(rootId);
             })
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));

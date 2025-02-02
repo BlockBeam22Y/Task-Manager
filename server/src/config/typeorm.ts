@@ -11,7 +11,7 @@ const dbConfig = {
     password: db.password,
     autoLoadEntities: true,
     // synchronize: true,
-    logging: true,
+    // logging: true,
     // dropSchema: true,
     entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: ['dist/migrations/*{.ts,.js}'],

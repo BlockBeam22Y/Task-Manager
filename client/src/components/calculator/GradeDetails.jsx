@@ -1,16 +1,66 @@
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import BarChart from './BarChart';
 import TasksTable from './TasksTable';
+import { useEffect, useState } from 'react';
 
-function GradeDetails({ grade, handleOnClick }) {
-    const { name, value, weight, isAverage, parent } = grade;
+function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
+    const { id, name, value, weight, isAverage, parent } = grade;
+
+    const [formData, setFormData] = useState({
+        name: '',
+        value: '',
+        weight: 1
+    });
+    
+    useEffect(() => {
+        setFormData({ name, value, weight });
+    }, [grade])
+
+    const handleOnChange = (event) => {
+        const { name, value } = event.target;
+        console.log(name, +value)
+
+        if (name === 'value')
+            setFormData({
+                ...formData,
+                value: value ? `${+value}` : 0
+            });
+        else
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+    };
+
+    const handleOnSubmit = () => {
+        fetch(`http://localhost:3000/grades/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(res => {
+                if (!res.ok)
+                    throw new Error('Something went wrong');
+                
+                loadCourseGrades(rootId);
+            })
+    };
 
     return (
         <div className='px-8 py-4 bg-white shadow-md flex flex-col gap-6'>
             <div className='flex flex-col gap-3'>
                 <div className='flex items-center gap-2'>
                     <label className='font-medium'>Nombre:</label>
-                    <input type='text' className='h-7 w-[40rem] border border-black/25 rounded px-2' value={name} />
+                    <input
+                        type='text'
+                        name='name'
+                        value={formData.name}
+                        onChange={handleOnChange}
+                        onBlur={handleOnSubmit}
+                        className='h-7 w-[40rem] border border-black/25 rounded px-2'
+                    />
                 </div>
 
                 <div className='flex'>
@@ -19,7 +69,7 @@ function GradeDetails({ grade, handleOnClick }) {
 
                         <div className='relative'>
                             <button 
-                                disabled={!parent || weight === 0}
+                                disabled={!parent || formData.weight === 0}
                                 className='
                                 w-7 h-7
                                 bg-gray-300 text-gray-600
@@ -33,7 +83,7 @@ function GradeDetails({ grade, handleOnClick }) {
                                 <FiMinus className='w-4 h-4'/>
                             </button>
                             
-                            <input type='number' className='w-24 h-7 text-center border border-black/25 rounded' disabled value={weight} />
+                            <input type='number' className='w-24 h-7 text-center border border-black/25 rounded' disabled value={formData.weight} />
 
                             <button
                                 disabled={!parent}
@@ -57,9 +107,13 @@ function GradeDetails({ grade, handleOnClick }) {
 
                         <input
                             type='number'
+                            name='value'
+                            value={formData.value}
+                            onChange={handleOnChange}
+                            onBlur={handleOnSubmit}
                             className={`w-24 h-7 text-center border border-black/25 rounded ${isAverage && 'bg-gray-300 text-gray-600'}`}
                             disabled={isAverage}
-                            value={value} />
+                        />
                     </div>
                 </div>
             </div>

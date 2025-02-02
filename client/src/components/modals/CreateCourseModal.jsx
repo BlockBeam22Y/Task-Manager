@@ -42,12 +42,11 @@ function CreateCourseModal({ loadReport }) {
             })
         })
             .then(res => {
-                if (res.ok) {
-                    setModal(null);
-                    loadReport(id);
-                }
-                
-                throw new Error('Something went wrong');
+                if (!res.ok) 
+                    throw new Error('Something went wrong');
+                    
+                setModal(null);
+                loadReport(id);
             })
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));

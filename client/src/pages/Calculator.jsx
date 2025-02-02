@@ -74,7 +74,14 @@ function Calculator() {
                 }
 
                 {
-                    selectedGrade && <GradeDetails grade={selectedGrade} handleOnClick={handleOnClick} />
+                    selectedGrade && (
+                        <GradeDetails
+                            grade={selectedGrade}
+                            handleOnClick={handleOnClick}
+                            loadCourseGrades={loadCourseGrades}
+                            rootId={selectedRoot.id}
+                        />
+                    )
                 }
             </div>
         </>

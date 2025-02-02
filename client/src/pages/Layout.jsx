@@ -38,7 +38,7 @@ function Layout({ modal }) {
             <div className='flex grow min-h-0'>
                 {selectedReport && <Sidebar report={selectedReport}/>}
 
-                <div className='flex flex-col items-center gap-8 px-12 py-8 grow overflow-y-auto'>
+                <div className='flex flex-col gap-8 px-12 py-8 grow overflow-y-auto'>
                     {(!id === !selectedReport) && <Outlet context={{selectedReport, loadReport}}/>}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { GradesService } from './grades.service';
 
 @Controller('grades')
@@ -15,5 +15,16 @@ export class GradesController {
         const { name, weight, isAverage, parentId } = body;
 
         return this.gradesService.createGrade({ name, weight, isAverage, parentId });
+    }
+
+    @Put('/:id')
+    async update(@Param('id') id: string, @Body() body) {
+        const { name, value, weight } = body;
+
+        return this.gradesService.updateGrade(id, {
+            name,
+            value,
+            weight
+        });
     }
 }
