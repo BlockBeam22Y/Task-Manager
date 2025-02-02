@@ -18,8 +18,13 @@ export class GradesService {
     }
 
     async createGrade({ name, weight, isAverage, parentId }) {
-        const parentGrade = await this.gradesRepository.findOneBy({
-            id: parentId
+        const parentGrade = await this.gradesRepository.findOne({
+            where: {
+                id: parentId
+            },
+            relations: {
+                children: true
+            }
         });
 
         const grade = this.gradesRepository.create({
@@ -27,21 +32,19 @@ export class GradesService {
             weight,
             value: 0,
             isAverage,
+            order: parentGrade.children.length,
             parent: parentGrade,
             children: []
         })
 
         await this.gradesRepository.save(grade);
-        await this.updateGrade(grade.id, grade, true);
+        await this.updateGrade(grade.id, grade);
 
         return grade;
     }
 
-    async updateGrade(id: string, { name, weight, value }, forceUpdate = false) {
+    async updateGrade(id: string, { name, weight, value }) {
         const grade = await this.gradesRepository.findOneBy({ id });
-
-        if (!forceUpdate && grade.value === value && grade.weight === weight)
-            return this.gradesRepository.update(id, { name });
 
         let parentGrades = await this.gradesRepository.findAncestorsTree(grade, {
             relations: ['children']

@@ -36,6 +36,7 @@ export class CoursesService {
             value: 0,
             weight: 1,
             isAverage: true,
+            order: 0,
             course
         });
 

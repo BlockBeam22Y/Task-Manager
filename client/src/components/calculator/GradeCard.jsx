@@ -35,15 +35,17 @@ function GradeCard({ grade, handleOnClick, loadCourseGrades, rootId }) {
                         isAverage && (
                             <>
                                 {
-                                    children.map(childGrade => (
-                                        <GradeCard 
-                                            key={childGrade.id}
-                                            grade={childGrade} 
-                                            handleOnClick={handleOnClick}
-                                            loadCourseGrades={loadCourseGrades}
-                                            rootId={rootId ?? grade.id}
-                                        />
-                                    ))
+                                    children
+                                        .toSorted((a, b) => a.order - b.order)
+                                        .map(childGrade => (
+                                            <GradeCard 
+                                                key={childGrade.id}
+                                                grade={childGrade} 
+                                                handleOnClick={handleOnClick}
+                                                loadCourseGrades={loadCourseGrades}
+                                                rootId={rootId ?? grade.id}
+                                            />
+                                        ))
                                 }
 
                                 <div className='relative'>

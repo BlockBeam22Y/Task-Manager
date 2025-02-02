@@ -9,7 +9,9 @@ function BarChart({ grade, handleOnClick }) {
                 children.length > 0 && (
                     <div className='border-b-2 border-black'>
                         {
-                            children.map(grade => grade.weight > 0 && <GradeBar key={grade.id} grade={grade} handleOnClick={handleOnClick} />)
+                            children
+                                .toSorted((a, b) => a.order - b.order)
+                                .map(grade => grade.weight > 0 && <GradeBar key={grade.id} grade={grade} handleOnClick={handleOnClick} />)
                         }
                     </div>
                 )

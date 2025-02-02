@@ -25,6 +25,9 @@ export class Grade {
     })
     isAverage: boolean;
 
+    @Column('integer')
+    order: number;
+
     @TreeChildren()
     children: Grade[];
 
