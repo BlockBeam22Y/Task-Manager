@@ -31,12 +31,15 @@ export class GradesService {
         })
 
         await this.gradesRepository.save(grade);
+        await this.updateGrade(grade.id, grade, true);
+
+        return grade;
     }
 
-    async updateGrade(id: string, { name, weight, value }) {
+    async updateGrade(id: string, { name, weight, value }, forceUpdate = false) {
         const grade = await this.gradesRepository.findOneBy({ id });
 
-        if (grade.value === value)
+        if (!forceUpdate && grade.value === value)
             return this.gradesRepository.update(id, { name, weight });
 
         let parentGrades = await this.gradesRepository.findAncestorsTree(grade, {

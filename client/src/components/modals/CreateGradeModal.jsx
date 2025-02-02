@@ -34,8 +34,9 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
                     throw new Error('Something went wrong');
             
                 setModal(null);
-                loadCourseGrades(rootId);
+                return res.json();
             })
+            .then(data => loadCourseGrades(rootId, data))
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));
     };

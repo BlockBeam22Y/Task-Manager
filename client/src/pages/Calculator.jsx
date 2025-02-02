@@ -12,7 +12,7 @@ function Calculator() {
     const [selectedRoot, setSelectedRoot] = useState(null);
     const [selectedGrade, setSelectedGrade] = useState(null);
 
-    const loadCourseGrades = (rootId) => {
+    const loadCourseGrades = (rootId, currentGrade) => {
         fetch(`http://localhost:3000/grades/${rootId}`)
             .then(res => {
                 if (res.ok)
@@ -22,7 +22,7 @@ function Calculator() {
             })
             .then(data => {
                 setSelectedRoot(data);
-                setSelectedGrade(data);
+                setSelectedGrade(currentGrade ?? data);
             });
     };
 

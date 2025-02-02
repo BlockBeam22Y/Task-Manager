@@ -18,7 +18,6 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;
-        console.log(name, +value)
 
         if (name === 'value')
             setFormData({
@@ -44,8 +43,15 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                 if (!res.ok)
                     throw new Error('Something went wrong');
                 
-                loadCourseGrades(rootId);
+                loadCourseGrades(rootId, grade);
             })
+    };
+    
+    const handleOnKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleOnSubmit();
+            event.target.blur();
+        }
     };
 
     return (
@@ -59,6 +65,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                         value={formData.name}
                         onChange={handleOnChange}
                         onBlur={handleOnSubmit}
+                        onKeyDown={handleOnKeyDown}
                         className='h-7 w-[40rem] border border-black/25 rounded px-2'
                     />
                 </div>
@@ -111,6 +118,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                             value={formData.value}
                             onChange={handleOnChange}
                             onBlur={handleOnSubmit}
+                            onKeyDown={handleOnKeyDown}
                             className={`w-24 h-7 text-center border border-black/25 rounded ${isAverage && 'bg-gray-300 text-gray-600'}`}
                             disabled={isAverage}
                         />
