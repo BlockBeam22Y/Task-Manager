@@ -53,7 +53,7 @@ function Calculator() {
             <div className='w-full bg-gray-200 px-12 py-1 flex items-center gap-3'>
                 <span className='font-semibold'>Seleccione curso:</span>
 
-                <select onChange={handleOnChange} className='px-3 rounded-sm'>
+                <select value={code} onChange={handleOnChange} className='px-3 rounded-sm'>
                     {
                         Object.values(courses).map(course => (
                             <option key={course.code} value={course.code}>{`${course.code} - ${course.name}`}</option>

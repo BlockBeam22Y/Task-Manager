@@ -27,7 +27,8 @@ export class GradesService {
             weight,
             value: 0,
             isAverage,
-            parent: parentGrade
+            parent: parentGrade,
+            children: []
         })
 
         await this.gradesRepository.save(grade);
@@ -39,8 +40,8 @@ export class GradesService {
     async updateGrade(id: string, { name, weight, value }, forceUpdate = false) {
         const grade = await this.gradesRepository.findOneBy({ id });
 
-        if (!forceUpdate && grade.value === value)
-            return this.gradesRepository.update(id, { name, weight });
+        if (!forceUpdate && grade.value === value && grade.weight === weight)
+            return this.gradesRepository.update(id, { name });
 
         let parentGrades = await this.gradesRepository.findAncestorsTree(grade, {
             relations: ['children']
@@ -52,16 +53,20 @@ export class GradesService {
                 let weights = 0, weightedValues = 0;
 
                 for (const childGrade of parentGrades.children) {
-                    weights += childGrade.weight;
+                    weights += childGrade.id === previousGrade.id ? previousGrade.weight : childGrade.weight;
                     
-                    weightedValues += childGrade.weight * (
+                    weightedValues += (
                         childGrade.id === previousGrade.id ?
-                        previousGrade.value : 
-                        childGrade.value
+                        previousGrade.weight * previousGrade.value : 
+                        childGrade.weight * childGrade.value
                     );
                 }
 
-                parentGrades.value = weights === 0 ? 0 : weightedValues / weights;
+                parentGrades.value = weights === 0 ? 0 : (
+                    parentGrades.parent ? 
+                    Math.floor(1000 * weightedValues / weights) / 1000 : 
+                    Math.floor(10 * weightedValues / weights) / 10
+                );
             } else {
                 parentGrades.name = name;
                 parentGrades.weight = weight;

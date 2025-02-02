@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
     const { id, name, value, weight, isAverage, parent } = grade;
+    const [isPending, setIsPending] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -32,6 +33,8 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
     };
 
     const handleOnSubmit = () => {
+        setIsPending(true);
+        
         fetch(`http://localhost:3000/grades/${id}`, {
             method: 'PUT',
             headers: {
@@ -45,13 +48,27 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                 
                 loadCourseGrades(rootId, grade);
             })
+            .finally(() => setIsPending(false));
     };
     
     const handleOnKeyDown = (event) => {
         if (event.key === 'Enter') {
             handleOnSubmit();
-            event.target.blur();
         }
+    };
+
+    const handleOnClickDown = () => {
+        formData.weight -= 1;
+        
+        setFormData(formData);
+        handleOnSubmit();
+    };
+
+    const handleOnClickUp = () => {
+        formData.weight += 1;
+
+        setFormData(formData);
+        handleOnSubmit();
     };
 
     return (
@@ -63,6 +80,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                         type='text'
                         name='name'
                         value={formData.name}
+                        disabled={isPending}
                         onChange={handleOnChange}
                         onBlur={handleOnSubmit}
                         onKeyDown={handleOnKeyDown}
@@ -76,7 +94,8 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
 
                         <div className='relative'>
                             <button 
-                                disabled={!parent || formData.weight === 0}
+                                disabled={isPending || !parent || formData.weight === 0}
+                                onClick={handleOnClickDown}
                                 className='
                                 w-7 h-7
                                 bg-gray-300 text-gray-600
@@ -93,7 +112,8 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                             <input type='number' className='w-24 h-7 text-center border border-black/25 rounded' disabled value={formData.weight} />
 
                             <button
-                                disabled={!parent}
+                                disabled={isPending || !parent}
+                                onClick={handleOnClickUp}
                                 className='
                                 w-7 h-7
                                 bg-gray-300 text-gray-600
@@ -120,7 +140,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                             onBlur={handleOnSubmit}
                             onKeyDown={handleOnKeyDown}
                             className={`w-24 h-7 text-center border border-black/25 rounded ${isAverage && 'bg-gray-300 text-gray-600'}`}
-                            disabled={isAverage}
+                            disabled={isPending || isAverage}
                         />
                     </div>
                 </div>
