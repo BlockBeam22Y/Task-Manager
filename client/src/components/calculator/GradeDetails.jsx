@@ -2,6 +2,7 @@ import { FiMinus, FiPlus } from 'react-icons/fi';
 import BarChart from './BarChart';
 import TasksTable from './TasksTable';
 import { useEffect, useState } from 'react';
+import DeleteGrade from './DeleteGrade';
 
 function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
     const { id, name, value, weight, isAverage, parent } = grade;
@@ -165,6 +166,12 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                 
                 {
                     isAverage ? <BarChart grade={grade} handleOnClick={handleOnClick}/> : <TasksTable />
+                }
+            </div>
+            
+            <div className='flex justify-center items-center'>
+                {
+                    parent && <DeleteGrade grade={grade} loadCourseGrades={loadCourseGrades} rootId={rootId} />
                 }
             </div>
         </div>

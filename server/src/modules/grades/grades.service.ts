@@ -99,4 +99,30 @@ export class GradesService {
 
         return id;
     }
+
+    async deleteGrade(id: string) {
+        const grade = await this.gradesRepository.findOne({
+            where: { id },
+            relations: {
+                parent: true
+            }
+        });
+
+        await this.updateGrade(grade.id, { ...grade, weight: 0 });
+        await this.gradesRepository.remove(grade);
+
+        const parentGrade = await this.gradesRepository.findOne({
+            where: { id: grade.parent.id },
+            relations: {
+                children: true
+            }
+        });
+
+        for (let i = 0; i < parentGrade.children.length; i++) {
+            parentGrade.children[i].order = i;
+        }
+        
+        await this.gradesRepository.save(parentGrade);
+        return id;
+    }
 }

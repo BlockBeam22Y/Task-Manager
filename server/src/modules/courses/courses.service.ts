@@ -56,10 +56,27 @@ export class CoursesService {
     }
 
     async deleteCourse(id: string) {
-        const course = await this.coursesRepository.findOneBy({ id });
+        const course = await this.coursesRepository.findOne({
+            where: { id },
+            relations: {
+                report: true
+            }
+        });
 
         await this.coursesRepository.remove(course);
 
+        const report = await this.reportsRepository.findOne({
+            where: { id: course.report.id },
+            relations: {
+                courses: true
+            }
+        });
+
+        for (let i = 0; i < report.courses.length; i++) {
+            report.courses[i].order = i;
+        }
+
+        await this.reportsRepository.save(report);
         return id;
     }
 }
