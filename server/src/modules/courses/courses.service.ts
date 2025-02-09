@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Course } from './courses.entity';
-import { Repository } from 'typeorm';
+import { Repository, TreeRepository } from 'typeorm';
 import { Report } from '../reports/reports.entity';
 import { Grade } from '../grades/grades.entity';
 
@@ -10,7 +10,7 @@ export class CoursesService {
     constructor(
         @InjectRepository(Course) private readonly coursesRepository: Repository<Course>,
         @InjectRepository(Report) private readonly reportsRepository: Repository<Report>,
-        @InjectRepository(Grade) private readonly gradesRepository: Repository<Grade>
+        @InjectRepository(Grade) private readonly gradesRepository: TreeRepository<Grade>
     ) {}
 
     async getCourses() {
@@ -51,6 +51,14 @@ export class CoursesService {
 
     async updateCourse(id: string, { name, code, credits }) {
         await this.coursesRepository.update(id, { name, code, credits });
+
+        return id;
+    }
+
+    async deleteCourse(id: string) {
+        const course = await this.coursesRepository.findOneBy({ id });
+
+        await this.coursesRepository.remove(course);
 
         return id;
     }

@@ -18,6 +18,8 @@ export class Report {
     })
     user: User;
 
-    @OneToMany(() => Course, (course) => course.report)
+    @OneToMany(() => Course, (course) => course.report, {
+        cascade: true
+    })
     courses: Course[];
 }

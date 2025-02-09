@@ -30,6 +30,8 @@ export class Course {
     })
     report: Report;
     
-    @OneToMany(() => Grade, (grade) => grade.course)
+    @OneToMany(() => Grade, (grade) => grade.course, {
+        cascade: true
+    })
     grades: Grade[];
 }

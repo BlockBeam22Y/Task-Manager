@@ -20,7 +20,9 @@ export class ReportsService {
             where: { id },
             relations: {
                 courses: {
-                    grades: true
+                    grades: {
+                        parent: true
+                    }
                 }
             }
         });

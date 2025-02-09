@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { ModalContext } from '../../App';
-import { PiWarningCircleFill } from 'react-icons/pi';
 import Toggle from '../../utils/Toggle';
+import RequestErrorMessage from '../layout/RequestErrorMessage';
 
 function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
     const [name, setName] = useState('');
@@ -107,14 +107,7 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
                 </label>
             </div>
             
-            {
-                isError && (
-                    <div className='bg-red-600 text-white text-sm p-2 flex items-center gap-1 rounded'>
-                        <PiWarningCircleFill className='w-5 h-5' />
-                        <span>Algo salió mal. Por favor, vuelva a intentarlo.</span>
-                    </div>
-                )
-            }
+            { isError && <RequestErrorMessage/> }
 
             <div className='flex justify-center items-center'>
                 <button

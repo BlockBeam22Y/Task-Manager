@@ -1,9 +1,10 @@
-import { MdDragIndicator } from 'react-icons/md'
+import { MdDelete, MdDragIndicator } from 'react-icons/md'
 import { FaEdit, FaEye } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { ModalContext } from '../../App';
 import UpdateCourseModal from '../modals/UpdateCourseModal';
+import DeleteCourseModal from '../modals/DeleteCourseModal';
 
 function CourseRow({ course, loadReport }) {
     const { code, name, credits, grades } = course;
@@ -17,6 +18,9 @@ function CourseRow({ course, loadReport }) {
         },
         edit: () => {
             setModal(<UpdateCourseModal course={course} loadReport={loadReport} />);
+        },
+        delete: () => {
+            setModal(<DeleteCourseModal course={course} loadReport={loadReport} />);
         }
     };
 
@@ -56,6 +60,18 @@ function CourseRow({ course, loadReport }) {
                     active:bg-gray-300 active:text-gray-500
                 '>
                     <FaEdit className='w-4 h-4'/>
+                </button>
+
+                <button 
+                    onClick={handleOnClick.delete}
+                    className='
+                    w-6 h-6
+                    p-1 rounded-md
+                    bg-gray-300 text-gray-600
+                    hover:bg-gray-400 hover:text-gray-700
+                    active:bg-gray-300 active:text-gray-500
+                '>
+                    <MdDelete className='w-4 h-4'/>
                 </button>
             </div>
         </div>

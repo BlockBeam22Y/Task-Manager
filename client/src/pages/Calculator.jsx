@@ -26,7 +26,7 @@ function Calculator() {
     }
 
     const loadCourseGrades = (rootId, currentGrade) => {
-        fetch(`http://localhost:3000/grades/${rootId}`)
+        fetch(`http://localhost:3000/grades/tree/${rootId}`)
             .then(res => {
                 if (res.ok)
                     return res.json();

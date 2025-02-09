@@ -5,7 +5,12 @@ import { GradesService } from './grades.service';
 export class GradesController {
     constructor(private readonly gradesService: GradesService) {}
 
-    @Get('/:rootId')
+    @Get('/:id')
+    async getById(@Param('id') id: string) {
+        return this.gradesService.getGradeById(id);
+    }
+
+    @Get('/tree/:rootId')
     async getByRoot(@Param('rootId') rootId: string) {
         return this.gradesService.getGradesByRoot(rootId);
     }

@@ -20,10 +20,16 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
     const handleOnChange = (event) => {
         const { name, value } = event.target;
 
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        if (name === 'value')
+            setFormData({
+                ...formData,
+                [name]: value || 0
+            });
+        else
+            setFormData({
+                ...formData,
+                [name]: value
+            });
     };
 
     const handleOnSubmit = () => {

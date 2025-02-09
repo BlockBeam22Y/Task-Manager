@@ -7,6 +7,16 @@ import { TreeRepository } from 'typeorm';
 export class GradesService {
     constructor(@InjectRepository(Grade) private readonly gradesRepository: TreeRepository<Grade>) {}
 
+    async getGradeById(id: string) {
+        return this.gradesRepository.findOne({
+            where: { id },
+            relations: {
+                parent: true,
+                children: true
+            }
+        });
+    }
+
     async getGradesByRoot(rootId: string) {
         const rootGrade = await this.gradesRepository.findOneBy({
             id: rootId
@@ -23,7 +33,8 @@ export class GradesService {
                 id: parentId
             },
             relations: {
-                children: true
+                children: true,
+                course: true
             }
         });
 
@@ -34,7 +45,8 @@ export class GradesService {
             isAverage,
             order: parentGrade.children.length,
             parent: parentGrade,
-            children: []
+            children: [],
+            course: parentGrade.course
         })
 
         await this.gradesRepository.save(grade);
@@ -46,16 +58,16 @@ export class GradesService {
     async updateGrade(id: string, { name, weight, value }) {
         const grade = await this.gradesRepository.findOneBy({ id });
 
-        let parentGrades = await this.gradesRepository.findAncestorsTree(grade, {
+        let currentGrade = await this.gradesRepository.findAncestorsTree(grade, {
             relations: ['children']
         });
 
-        let previousGrade;
-        while (parentGrades) {
-            if (parentGrades.children) {
+        let previousGrade = null, children = null;
+        while (true) {
+            if (children) {
                 let weights = 0, weightedValues = 0;
 
-                for (const childGrade of parentGrades.children) {
+                for (const childGrade of children) {
                     weights += childGrade.id === previousGrade.id ? previousGrade.weight : childGrade.weight;
                     
                     weightedValues += (
@@ -65,20 +77,24 @@ export class GradesService {
                     );
                 }
 
-                parentGrades.value = weights === 0 ? 0 : (
-                    parentGrades.parent ? 
+                currentGrade.value = weights === 0 ? 0 : (
+                    currentGrade.parent ? 
                     Math.floor(1000 * weightedValues / weights) / 1000 : 
                     Math.floor(10 * weightedValues / weights) / 10
                 );
             } else {
-                parentGrades.name = name;
-                parentGrades.weight = weight;
-                parentGrades.value = value;
+                currentGrade.name = name;
+                currentGrade.weight = weight;
+                currentGrade.value = value;
             }
 
-            await this.gradesRepository.save(parentGrades);
-            previousGrade = parentGrades;
-            parentGrades = parentGrades.parent;
+            await this.gradesRepository.save(currentGrade);
+
+            if (!currentGrade.parent)
+                break;
+
+            previousGrade = currentGrade;
+            ({ children, ...currentGrade } = currentGrade.parent);
         }
 
         return id;

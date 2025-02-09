@@ -28,8 +28,10 @@ export class Grade {
     @Column('integer')
     order: number;
 
-    @TreeChildren()
-    children: Grade[];
+    @TreeChildren({
+        cascade: true
+    })
+    children?: Grade[];
 
     @TreeParent()
     parent: Grade;
@@ -40,6 +42,8 @@ export class Grade {
     })
     course: Course;
 
-    @OneToMany(() => Task, (task) => task.grade)
+    @OneToMany(() => Task, (task) => task.grade, {
+        cascade: true
+    })
     tasks: Task[];
 }
