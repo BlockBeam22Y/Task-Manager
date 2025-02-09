@@ -12,6 +12,19 @@ function Calculator() {
     const [selectedRoot, setSelectedRoot] = useState(null);
     const [selectedGrade, setSelectedGrade] = useState(null);
 
+    const loadSelectedGrade = (gradeId) => {
+        fetch(`http://localhost:3000/grades/${gradeId}`)
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+
+                throw new Error('Something went wrong');
+            })
+            .then(data => {
+                setSelectedGrade(data);
+            });
+    }
+
     const loadCourseGrades = (rootId, currentGrade) => {
         fetch(`http://localhost:3000/grades/${rootId}`)
             .then(res => {
@@ -22,7 +35,11 @@ function Calculator() {
             })
             .then(data => {
                 setSelectedRoot(data);
-                setSelectedGrade(currentGrade ?? data);
+                
+                if (currentGrade)
+                    loadSelectedGrade(currentGrade.id);
+                else
+                    setSelectedGrade(data);
             });
     };
 

@@ -1,7 +1,7 @@
 import NewGrade from './NewGrade';
 
 function GradeCard({ grade, handleOnClick, loadCourseGrades, rootId }) {
-    const { name, value, weight, children, isAverage } = grade;
+    const { name, value, weight, children, parent, isAverage } = grade;
 
     return (
         <div className='flex flex-col'>
@@ -12,12 +12,12 @@ function GradeCard({ grade, handleOnClick, loadCourseGrades, rootId }) {
                 ${weight ? 'bg-white' : 'bg-gray-300 text-gray-600'}
                 flex justify-between
                 rounded shadow-md cursor-pointer
-                relative ${name !== 'Nota del curso' && 'mt-5'}`}
+                relative ${parent && 'mt-5'}`}
             >
                 <span>{ name }</span>
                 <span className='font-medium'>{ value }</span>
                 {
-                    name !== 'Nota del curso' && (
+                    parent && (
                         <div className='absolute -left-5 bottom-4 w-5 border-b border-black text-black text-center font-medium'>
                             { weight }
                         </div>

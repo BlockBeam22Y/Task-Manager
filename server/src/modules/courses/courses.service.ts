@@ -44,4 +44,10 @@ export class CoursesService {
 
         return course;
     }
+
+    async updateCourse(id: string, { name, code, credits }) {
+        await this.coursesRepository.update(id, { name, code, credits });
+
+        return id;
+    }
 }

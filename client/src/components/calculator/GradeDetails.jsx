@@ -20,19 +20,22 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
     const handleOnChange = (event) => {
         const { name, value } = event.target;
 
-        if (name === 'value')
-            setFormData({
-                ...formData,
-                value: value ? `${+value}` : 0
-            });
-        else
-            setFormData({
-                ...formData,
-                [name]: value
-            });
+        setFormData({
+            ...formData,
+            [name]: value
+        });
     };
 
     const handleOnSubmit = () => {
+        if (!formData.name) {
+            setFormData({
+                ...formData,
+                name: grade.name
+            });
+
+            return;
+        }
+
         setIsPending(true);
         
         fetch(`http://localhost:3000/grades/${id}`, {
@@ -136,6 +139,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                             type='number'
                             name='value'
                             value={formData.value}
+                            onFocus={(event) => event.target.select()}
                             onChange={handleOnChange}
                             onBlur={handleOnSubmit}
                             onKeyDown={handleOnKeyDown}

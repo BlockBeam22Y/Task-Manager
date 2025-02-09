@@ -54,7 +54,7 @@ function CreateReportModal({ loadUser }) {
                 )
             }
 
-            <div className='flex justify-center'>
+            <div className='flex justify-center items-center'>
                 <button
                     disabled={!name || isPending}
                     onClick={handleOnSubmit}

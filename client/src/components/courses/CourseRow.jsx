@@ -1,14 +1,23 @@
 import { MdDragIndicator } from 'react-icons/md'
-import { FaEye } from 'react-icons/fa'
+import { FaEdit, FaEye } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { ModalContext } from '../../App';
+import UpdateCourseModal from '../modals/UpdateCourseModal';
 
-function CourseRow({ course }) {
+function CourseRow({ course, loadReport }) {
     const { code, name, credits, grades } = course;
     const navigate = useNavigate();
     const { id } = useParams();
+    const setModal = useContext(ModalContext)
 
-    const handleOnClick = () => {
-        navigate(`/reports/${id}/calculator/${code}`);
+    const handleOnClick = {
+        see: () => {
+            navigate(`/reports/${id}/calculator/${code}`);
+        },
+        edit: () => {
+            setModal(<UpdateCourseModal course={course} loadReport={loadReport} />);
+        }
     };
 
     return (
@@ -24,10 +33,10 @@ function CourseRow({ course }) {
                     { grades.at(0).value }
                 </span>
             </div>
-            <div className='w-48 py-1.5 flex justify-center items-center'>
+            <div className='w-48 py-1.5 flex justify-center items-center gap-2'>
                 <button 
-                onClick={handleOnClick}
-                className='
+                    onClick={handleOnClick.see}
+                    className='
                     w-6 h-6
                     p-1 rounded-md
                     bg-gray-300 text-gray-600
@@ -35,6 +44,18 @@ function CourseRow({ course }) {
                     active:bg-gray-300 active:text-gray-500
                 '>
                     <FaEye className='w-4 h-4'/>
+                </button>
+
+                <button 
+                    onClick={handleOnClick.edit}
+                    className='
+                    w-6 h-6
+                    p-1 rounded-md
+                    bg-gray-300 text-gray-600
+                    hover:bg-gray-400 hover:text-gray-700
+                    active:bg-gray-300 active:text-gray-500
+                '>
+                    <FaEdit className='w-4 h-4'/>
                 </button>
             </div>
         </div>

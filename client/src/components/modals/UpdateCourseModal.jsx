@@ -1,20 +1,20 @@
 import { useContext, useState } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { ModalContext } from '../../App';
-import { useParams } from 'react-router-dom';
 import { PiWarningCircleFill } from 'react-icons/pi';
+import { useParams } from 'react-router-dom';
 
-function CreateCourseModal({ loadReport }) {
+function UpdateCourseModal({ course, loadReport }) {
     const [formData, setFormData] = useState({
-        name: '',
-        code: ''
+        name: course.name,
+        code: course.code
     });
-    const [credits, setCredits] = useState(1);
-
+    const [credits, setCredits] = useState(course.credits);
+    
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
     const setModal = useContext(ModalContext);
-
+    
     const { id } = useParams();
 
     const handleOnChange = (event) => {
@@ -30,15 +30,14 @@ function CreateCourseModal({ loadReport }) {
         setIsPending(true);
         setIsError(false);
 
-        fetch('http://localhost:3000/courses', {
-            method: 'POST',
+        fetch(`http://localhost:3000/courses/${course.id}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 ...formData,
-                credits,
-                reportId: id,
+                credits
             })
         })
             .then(res => {
@@ -51,10 +50,10 @@ function CreateCourseModal({ loadReport }) {
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));
     };
-    
+
     return (
         <>
-            <h3 className='font-bold text-2xl border-b pb-2'>Nuevo Curso</h3>
+            <h3 className='font-bold text-2xl border-b pb-2'>Editar Curso</h3>
 
             <div className='flex items-center gap-2'>
                 <label className='font-medium'>Nombre:</label>
@@ -123,7 +122,7 @@ function CreateCourseModal({ loadReport }) {
                     </div>
                 </div>
             </div>
-            
+
             {
                 isError && (
                     <div className='bg-red-600 text-white text-sm p-2 flex items-center gap-1 rounded'>
@@ -133,7 +132,20 @@ function CreateCourseModal({ loadReport }) {
                 )
             }
 
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center gap-2'>
+                <button
+                    onClick={() => setModal(null)}
+                    className='
+                    bg-white text-primary-500 font-medium
+                    hover:bg-gray-100 hover:text-primary-600
+                    active:bg-white active:text-primary-400
+                    border border-primary-500
+                    px-4 py-2 rounded-full
+                    flex items-center
+                '>
+                    Cancelar
+                </button>
+
                 <button
                     onClick={handleOnSubmit}
                     disabled={
@@ -149,11 +161,11 @@ function CreateCourseModal({ loadReport }) {
                     px-4 py-2 rounded-full
                     flex items-center
                 '>
-                    Crear
+                    Guardar cambios
                 </button>
             </div>
         </>
     );
 }
 
-export default CreateCourseModal;
+export default UpdateCourseModal;

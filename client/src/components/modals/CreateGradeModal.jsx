@@ -116,7 +116,7 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
                 )
             }
 
-            <div className='flex justify-center'>
+            <div className='flex justify-center items-center'>
                 <button
                     onClick={handleOnSubmit}
                     disabled={!name || isPending}

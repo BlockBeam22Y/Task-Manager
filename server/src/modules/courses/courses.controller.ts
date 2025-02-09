@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 
 @Controller('courses')
@@ -15,5 +15,12 @@ export class CoursesController {
         const { name, code, credits, reportId } = body;
         
         return this.coursesService.createCourse({ name, code, credits, reportId });
+    }
+
+    @Put('/:id')
+    async update(@Param('id') id: string, @Body() body) {
+        const { name, code, credits } = body;
+
+        return this.coursesService.updateCourse(id, { name, code, credits });
     }
 }

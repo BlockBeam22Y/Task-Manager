@@ -20,7 +20,13 @@ function Courses() {
                 <CourseHeader/>
                 {
                     courses.length ? (
-                        courses.map(course => <CourseRow key={course.id} course={course} />)
+                        courses.map(course => (
+                            <CourseRow
+                                key={course.id}
+                                course={course}
+                                loadReport={loadReport}
+                            />
+                        ))
                     ) : (
                         <div className='w-full bg-white text-center border-2 border-t-0 border-primary-500 py-1.5'>
                             No se han encontrado cursos
