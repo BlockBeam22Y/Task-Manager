@@ -21,6 +21,9 @@ export class Course {
     @Column('integer')
     credits: number;
 
+    @Column('integer')
+    order: number;
+
     @ManyToOne(() => Report, (report) => report.courses)
     @JoinColumn({
         name: 'report_id'

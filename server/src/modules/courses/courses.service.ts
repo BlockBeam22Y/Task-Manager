@@ -18,14 +18,18 @@ export class CoursesService {
     }
 
     async createCourse({ name, code, credits, reportId }) {
-        const report = await this.reportsRepository.findOneBy({
-            id: reportId
+        const report = await this.reportsRepository.findOne({
+            where: { id: reportId },
+            relations: {
+                courses: true
+            }
         });
 
         const course = this.coursesRepository.create({
             name,
             code,
             credits,
+            order: report.courses.length,
             report,
         });
         
