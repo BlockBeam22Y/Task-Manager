@@ -1,6 +1,6 @@
 import NewGrade from './NewGrade';
 
-function GradeCard({ grade, handleOnClick, loadCourseGrades, rootId }) {
+function GradeCard({ grade, selectedGrade, handleOnClick, loadCourseGrades, rootId }) {
     const { name, value, weight, children, parent, isAverage } = grade;
 
     return (
@@ -9,6 +9,7 @@ function GradeCard({ grade, handleOnClick, loadCourseGrades, rootId }) {
                 onClick={() => handleOnClick(grade)}
                 className={`
                 w-72 px-3 py-1 hover:bg-gray-200 duration-200
+                ${grade.id === selectedGrade.id && 'outline outline-primary-500/50'}
                 ${weight ? 'bg-white' : 'bg-gray-300 text-gray-600'}
                 flex justify-between
                 rounded shadow-md cursor-pointer
@@ -41,6 +42,7 @@ function GradeCard({ grade, handleOnClick, loadCourseGrades, rootId }) {
                                             <GradeCard 
                                                 key={childGrade.id}
                                                 grade={childGrade} 
+                                                selectedGrade={selectedGrade}
                                                 handleOnClick={handleOnClick}
                                                 loadCourseGrades={loadCourseGrades}
                                                 rootId={rootId ?? grade.id}

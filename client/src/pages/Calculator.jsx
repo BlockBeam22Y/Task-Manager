@@ -1,7 +1,7 @@
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import GradeCard from '../components/calculator/GradeCard';
-import GradeDetails from '../components/calculator/GradeDetails';
+import GradeDetails from '../components/calculator/gradeDetails/GradeDetails';
 
 function Calculator() {
     const { selectedReport: { courses } } = useOutletContext();
@@ -84,6 +84,7 @@ function Calculator() {
                     selectedRoot && (
                         <GradeCard 
                             grade={selectedRoot} 
+                            selectedGrade={selectedGrade}
                             handleOnClick={handleOnClick}
                             loadCourseGrades={loadCourseGrades}
                         />

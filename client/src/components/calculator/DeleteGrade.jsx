@@ -21,6 +21,7 @@ function DeleteGrade({ grade, rootId, loadCourseGrades }) {
             active:bg-red-400 active:text-white
             p-2 pr-3 gap-1 rounded-md
             flex items-center
+            absolute right-0
         '>
             <MdDelete className='w-6 h-6'/>
             <span>Eliminar nota</span>

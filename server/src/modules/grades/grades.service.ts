@@ -12,7 +12,8 @@ export class GradesService {
             where: { id },
             relations: {
                 parent: true,
-                children: true
+                children: true,
+                tasks: true
             }
         });
     }
@@ -23,7 +24,7 @@ export class GradesService {
         });
 
         return this.gradesRepository.findDescendantsTree(rootGrade, {
-            relations: ['parent']
+            relations: ['parent', 'tasks']
         });
     }
 
