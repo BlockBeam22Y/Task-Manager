@@ -10,6 +10,11 @@ export class CoursesController {
         return this.coursesService.getCourses();
     }
 
+    @Get('/:id')
+    async getById(@Param('id') id: string) {
+        return this.coursesService.getCourseById(id);
+    }
+
     @Post()
     async create(@Body() body) {
         const { name, code, credits, reportId } = body;

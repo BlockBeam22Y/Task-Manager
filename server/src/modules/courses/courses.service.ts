@@ -17,6 +17,15 @@ export class CoursesService {
         return this.coursesRepository.find();
     }
 
+    async getCourseById(id: string) {
+        return this.coursesRepository.findOne({
+            where: { id },
+            relations: {
+                grades: true
+            }
+        });
+    }
+
     async createCourse({ name, code, credits, reportId }) {
         const report = await this.reportsRepository.findOne({
             where: { id: reportId },

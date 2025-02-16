@@ -1,14 +1,17 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import RequestErrorMessage from '../layout/RequestErrorMessage';
 import { ModalContext } from '../../App';
 
-function CreateTaskModal({ grade, loadCourseGrades, rootId }) {
+function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, loadTasks }) {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
         date: '',
         time: ''
     });
+    const [course, setCourse] = useState(null);
+    const [grades, setGrades] = useState({});
+    const [selectedGrade, setSelectedGrade] = useState(null);
 
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -34,7 +37,7 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId }) {
             },
             body: JSON.stringify({
                 ...formData,
-                gradeId: grade.id
+                gradeId: selectedGrade.id
             })
         })
             .then(res => {
@@ -42,11 +45,37 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId }) {
                     throw new Error('Something went wrong');
             
                 setModal(null);
-                loadCourseGrades(rootId, grade)
+
+                if (grade) 
+                    loadCourseGrades(rootId, grade)
+                else
+                    loadTasks(selectedReport.id)
             })
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));
     };
+
+    useEffect(() => {
+        if (!course) return;
+
+        setSelectedGrade(null);
+        
+        fetch(`${import.meta.env.VITE_API_URL}/courses/${course.id}`)
+            .then(res => {
+                if (!res.ok) 
+                    throw new Error('Something went wrong');
+
+                return res.json();
+            })
+            .then(data => setGrades(
+                data.grades
+                    .filter(grade => !grade.isAverage)
+                    .reduce((acc, grade) => {
+                        acc[grade.id] = grade
+                        return acc;
+                    }, {})
+            ))
+    }, [course]);
 
     return (
         <>
@@ -95,6 +124,45 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId }) {
                 </div>
             </div>
 
+            {
+                !grade && (
+                    <>
+                        <div className='flex items-center gap-2'>
+                            <label className='font-medium'>Curso:</label>
+                            <select
+                                value={course ? course.code : ''}
+                                onChange={(event) => setCourse(selectedReport.courses[event.target.value])}
+                                className='grow border border-black/25 rounded px-2'
+                            >
+                                <option value=''>Selecciona un curso</option>
+                                {
+                                    Object.values(selectedReport.courses).map(course => (
+                                        <option key={course.code} value={course.code}>{`${course.code} - ${course.name}`}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+
+                        <div className='flex items-center gap-2'>
+                            <label className='font-medium'>Nota:</label>
+                            <select
+                                disabled={!course}
+                                value={selectedGrade ? selectedGrade.id : ''}
+                                onChange={(event) => setSelectedGrade(grades[event.target.value])}
+                                className='grow border border-black/25 rounded px-2'
+                            >
+                                <option value=''>Selecciona una nota</option>
+                                {
+                                    Object.values(grades).map(grade => (
+                                        <option key={grade.id} value={grade.id}>{grade.name}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                    </>
+                )
+            }
+
             { isError && <RequestErrorMessage/> }
 
             <div className='flex justify-center items-center'>
@@ -104,6 +172,7 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId }) {
                         !formData.name ||
                         !formData.date ||
                         !formData.time ||
+                        !selectedGrade ||
                         isPending
                     }
                     className='

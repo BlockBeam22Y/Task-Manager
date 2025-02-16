@@ -16,6 +16,7 @@ function Courses() {
 
             <div className='relative'>
                 <CourseHeader/>
+                
                 {
                     courses.length ? (
                         courses
@@ -33,6 +34,7 @@ function Courses() {
                         </div>
                     )
                 }
+
                 <NewCourse loadReport={loadReport} />
             </div>
         </>
