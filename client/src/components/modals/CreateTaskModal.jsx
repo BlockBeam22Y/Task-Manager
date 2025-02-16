@@ -9,7 +9,7 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, load
         date: '',
         time: ''
     });
-    const [course, setCourse] = useState(null);
+    const [selectedCourse, setSelectedCourse] = useState('');
     const [grades, setGrades] = useState({});
     const [selectedGrade, setSelectedGrade] = useState(null);
 
@@ -25,6 +25,31 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, load
             [name]: value
         });
     }
+
+    const handleOnSelect = (event) => {
+        setSelectedGrade(null);
+
+        const courseId = event.target.value;
+        setSelectedCourse(courseId);
+
+        if (!courseId) return;
+        
+        fetch(`${import.meta.env.VITE_API_URL}/courses/${courseId}`)
+            .then(res => {
+                if (!res.ok) 
+                    throw new Error('Something went wrong');
+
+                return res.json();
+            })
+            .then(data => setGrades(
+                data.grades
+                    .filter(grade => !grade.isAverage)
+                    .reduce((acc, grade) => {
+                        acc[grade.id] = grade
+                        return acc;
+                    }, {})
+            ))
+    };
 
     const handleOnSubmit = () => {
         setIsPending(true);
@@ -54,28 +79,6 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, load
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));
     };
-
-    useEffect(() => {
-        if (!course) return;
-
-        setSelectedGrade(null);
-        
-        fetch(`${import.meta.env.VITE_API_URL}/courses/${course.id}`)
-            .then(res => {
-                if (!res.ok) 
-                    throw new Error('Something went wrong');
-
-                return res.json();
-            })
-            .then(data => setGrades(
-                data.grades
-                    .filter(grade => !grade.isAverage)
-                    .reduce((acc, grade) => {
-                        acc[grade.id] = grade
-                        return acc;
-                    }, {})
-            ))
-    }, [course]);
 
     return (
         <>
@@ -130,14 +133,14 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, load
                         <div className='flex items-center gap-2'>
                             <label className='font-medium'>Curso:</label>
                             <select
-                                value={course ? course.code : ''}
-                                onChange={(event) => setCourse(selectedReport.courses[event.target.value])}
+                                value={selectedCourse}
+                                onChange={handleOnSelect}
                                 className='grow border border-black/25 rounded px-2'
                             >
                                 <option value=''>Selecciona un curso</option>
                                 {
                                     Object.values(selectedReport.courses).map(course => (
-                                        <option key={course.code} value={course.code}>{`${course.code} - ${course.name}`}</option>
+                                        <option key={course.id} value={course.id}>{`${course.code} - ${course.name}`}</option>
                                     ))
                                 }
                             </select>
@@ -146,7 +149,7 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, load
                         <div className='flex items-center gap-2'>
                             <label className='font-medium'>Nota:</label>
                             <select
-                                disabled={!course}
+                                disabled={!selectedCourse}
                                 value={selectedGrade ? selectedGrade.id : ''}
                                 onChange={(event) => setSelectedGrade(grades[event.target.value])}
                                 className='grow border border-black/25 rounded px-2'
