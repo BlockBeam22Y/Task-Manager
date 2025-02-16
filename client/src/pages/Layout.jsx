@@ -13,7 +13,7 @@ function Layout({ modal }) {
     const loadReport = (id) => {
         if (!id) return;
 
-        fetch(`http://localhost:3000/reports/${id}`)
+        fetch(`${import.meta.env.VITE_API_URL}/reports/${id}`)
             .then(res => {
                 if (!res.ok) 
                     throw new Error('Something went wrong');

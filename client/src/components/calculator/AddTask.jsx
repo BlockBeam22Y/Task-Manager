@@ -1,8 +1,20 @@
+import { useContext } from 'react';
 import { FiPlus } from 'react-icons/fi';
+import { ModalContext } from '../../App';
+import CreateTaskModal from '../modals/CreateTaskModal';
 
-function AddTask() {
+function AddTask({ grade, loadCourseGrades, rootId }) {
+    const setModal = useContext(ModalContext);
+    
     return (
         <button
+            onClick={() => setModal(
+                <CreateTaskModal 
+                    grade={grade} 
+                    loadCourseGrades={loadCourseGrades}
+                    rootId={rootId}
+                />
+            )}
             className='
             bg-primary-500 text-white font-medium
             hover:bg-primary-600 active:bg-primary-400

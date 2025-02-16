@@ -13,7 +13,8 @@ function Calculator() {
     const [selectedGrade, setSelectedGrade] = useState(null);
 
     const loadSelectedGrade = (gradeId) => {
-        fetch(`http://localhost:3000/grades/${gradeId}`)
+        
+        fetch(`${import.meta.env.VITE_API_URL}/grades/${gradeId}`)
             .then(res => {
                 if (res.ok)
                     return res.json();
@@ -26,7 +27,7 @@ function Calculator() {
     }
 
     const loadCourseGrades = (rootId, currentGrade) => {
-        fetch(`http://localhost:3000/grades/tree/${rootId}`)
+        fetch(`${import.meta.env.VITE_API_URL}/grades/tree/${rootId}`)
             .then(res => {
                 if (res.ok)
                     return res.json();

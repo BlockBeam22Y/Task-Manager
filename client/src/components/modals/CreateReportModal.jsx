@@ -12,7 +12,7 @@ function CreateReportModal({ loadUser }) {
         setIsPending(true);
         setIsError(false);
 
-        fetch('http://localhost:3000/reports', {
+        fetch(`${import.meta.env.VITE_API_URL}/reports`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

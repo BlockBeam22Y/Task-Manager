@@ -30,7 +30,7 @@ function CreateCourseModal({ loadReport }) {
         setIsPending(true);
         setIsError(false);
 
-        fetch('http://localhost:3000/courses', {
+        fetch(`${import.meta.env.VITE_API_URL}/courses`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

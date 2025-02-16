@@ -6,7 +6,7 @@ function Reports() {
     const [user, setUser] = useState(null);
 
     const loadUser = () => {
-        fetch('http://localhost:3000/users')
+        fetch(`${import.meta.env.VITE_API_URL}/users`)
             .then(res => res.json())
             .then(data => setUser(data.at(0)))
     };

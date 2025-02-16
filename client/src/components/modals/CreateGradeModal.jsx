@@ -17,7 +17,7 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
         setIsPending(true);
         setIsError(false);
 
-        fetch('http://localhost:3000/grades', {
+        fetch(`${import.meta.env.VITE_API_URL}/grades`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -12,7 +12,7 @@ function DeleteGradeModal({ grade, rootId, loadCourseGrades }) {
         setIsPending(true);
         setIsError(false);
 
-        fetch(`http://localhost:3000/grades/${grade.id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/grades/${grade.id}`, {
             method: 'DELETE'
         })
             .then(res => {

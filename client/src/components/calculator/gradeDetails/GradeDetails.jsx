@@ -47,7 +47,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
 
         setIsPending(true);
         
-        fetch(`http://localhost:3000/grades/${id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/grades/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -179,7 +179,13 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                             loadCourseGrades={loadCourseGrades}
                             rootId={rootId}
                         />
-                    ) : <AddTask/>
+                    ) : (
+                        <AddTask
+                            grade={grade} 
+                            loadCourseGrades={loadCourseGrades}
+                            rootId={rootId}
+                        />
+                    )
                 }
                 
                 {

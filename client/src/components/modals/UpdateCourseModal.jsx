@@ -30,7 +30,7 @@ function UpdateCourseModal({ course, loadReport }) {
         setIsPending(true);
         setIsError(false);
 
-        fetch(`http://localhost:3000/courses/${course.id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/courses/${course.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
