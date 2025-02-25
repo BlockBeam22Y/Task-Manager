@@ -1,5 +1,7 @@
 import { useContext, useState } from 'react';
 import { ModalContext } from '../../App';
+import RequestErrorMessage from '../layout/RequestErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 function CreateReportModal({ loadUser }) {
     const [name, setName] = useState('');
@@ -7,6 +9,8 @@ function CreateReportModal({ loadUser }) {
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
     const setModal = useContext(ModalContext);
+
+    const navigate = useNavigate();
 
     const handleOnSubmit = () => {
         setIsPending(true);
@@ -25,7 +29,9 @@ function CreateReportModal({ loadUser }) {
                 
                 setModal(null);
                 loadUser();
+                return res.json();
             })
+            .then(data => navigate(`/reports/${data.id}/courses`))
             .catch(() => setIsError(true))
             .finally(() => setIsPending(false));
     };

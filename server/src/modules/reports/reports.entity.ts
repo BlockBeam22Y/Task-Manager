@@ -12,6 +12,11 @@ export class Report {
     })
     name: string;
 
+    @Column({
+        type: 'timestamp'
+    })
+    openedAt: Date;
+
     @ManyToOne(() => User, (user) => user.reports)
     @JoinColumn({
         name: 'user_id'

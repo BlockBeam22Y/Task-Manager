@@ -1,7 +1,9 @@
 import { SlOptionsVertical } from 'react-icons/sl'
+import '@github/relative-time-element'
 
 function ReportCard({ report }) {
     const { name, id } = report;
+    const openedAt = new Date(report.openedAt);
 
     return (
         <a
@@ -18,7 +20,22 @@ function ReportCard({ report }) {
                 </h3>
                 
                 <div className='w-full flex justify-between items-end text-gray-600'>
-                    <span className='text-xs'>Editado hace 2 días</span>
+                    {
+                        openedAt && (
+                            <div className='text-xs'>
+                                <span>Abierto </span>
+
+                                {
+                                    new Date() - openedAt < 28 * 24 * 3600 * 1000 ? (
+                                        <relative-time lang='es' datetime={openedAt} />
+                                    ) : (
+                                        <span>hace mucho tiempo</span>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
+                    
                     <div className='p-1 rounded-full hover:bg-gray-200 ease-in duration-100'>
                         <SlOptionsVertical/>
                     </div>

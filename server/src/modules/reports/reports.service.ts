@@ -27,6 +27,9 @@ export class ReportsService {
             }
         });
         
+        report.openedAt = new Date();
+        await this.reportsRepository.save(report);
+        
         for (let i = 0; i < report.courses.length; i++) {
             const { grades, ...course } = report.courses[i];
 
@@ -48,7 +51,8 @@ export class ReportsService {
 
         const report = this.reportsRepository.create({
             name,
-            user: users.at(0)
+            user: users.at(0),
+            openedAt: new Date()
         });
 
         return this.reportsRepository.save(report);
