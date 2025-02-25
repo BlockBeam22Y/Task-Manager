@@ -20,13 +20,15 @@ function Layout({ modal }) {
 
                 return res.json()
             })
-            .then(({ courses, ...data }) => setSelectedReport({
-                ...data,
-                courses: courses.reduce((acc, course) => ({
-                    ...acc,
-                    [course.code]: course
-                }), {})
-            }));
+            .then(({ courses, ...data }) => {
+                setSelectedReport({
+                    ...data,
+                    courses: courses.reduce((acc, course) => ({
+                        ...acc,
+                        [course.code]: course
+                    }), {})
+                })
+            });
     };
 
     useEffect(() => loadReport(id), [id]);

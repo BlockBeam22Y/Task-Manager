@@ -13,7 +13,6 @@ function Calculator() {
     const [selectedGrade, setSelectedGrade] = useState(null);
 
     const loadSelectedGrade = (gradeId) => {
-        
         fetch(`${import.meta.env.VITE_API_URL}/grades/${gradeId}`)
             .then(res => {
                 if (res.ok)

@@ -8,7 +8,7 @@ function Courses() {
     const { selectedReport, loadReport } = useOutletContext();
     const courses = Object.values(selectedReport.courses);
 
-    useEffect(() => loadReport(selectedReport.id), [selectedReport]);
+    useEffect(() => loadReport(selectedReport.id), []);
 
     return (
         <>
