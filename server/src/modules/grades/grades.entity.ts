@@ -36,7 +36,9 @@ export class Grade {
     @TreeParent()
     parent: Grade;
 
-    @ManyToOne(() => Course, (course) => course.grades)
+    @ManyToOne(() => Course, (course) => course.grades, {
+        onDelete: 'CASCADE'
+    })
     @JoinColumn({
         name: 'course_id'
     })

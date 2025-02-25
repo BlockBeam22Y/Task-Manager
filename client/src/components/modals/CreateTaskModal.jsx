@@ -11,7 +11,7 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, load
     });
     const [selectedCourse, setSelectedCourse] = useState('');
     const [grades, setGrades] = useState({});
-    const [selectedGrade, setSelectedGrade] = useState(null);
+    const [selectedGrade, setSelectedGrade] = useState(grade);
 
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);

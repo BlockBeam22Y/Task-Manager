@@ -28,7 +28,9 @@ export class Task {
     @Column('time')
     time: string;
 
-    @ManyToOne(() => Grade, (grade) => grade.tasks)
+    @ManyToOne(() => Grade, (grade) => grade.tasks, {
+        onDelete: 'CASCADE'
+    })
     @JoinColumn({
         name: 'grade_id'
     })

@@ -17,7 +17,9 @@ export class Report {
     })
     openedAt: Date;
 
-    @ManyToOne(() => User, (user) => user.reports)
+    @ManyToOne(() => User, (user) => user.reports, {
+        onDelete: 'CASCADE'
+    })
     @JoinColumn({
         name: 'user_id'
     })

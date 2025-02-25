@@ -23,7 +23,9 @@ export class Course {
     @Column('integer')
     order: number;
 
-    @ManyToOne(() => Report, (report) => report.courses)
+    @ManyToOne(() => Report, (report) => report.courses, {
+        onDelete: 'CASCADE'
+    })
     @JoinColumn({
         name: 'report_id'
     })
