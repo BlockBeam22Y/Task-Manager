@@ -1,4 +1,4 @@
-import { MdDelete, MdDragIndicator } from 'react-icons/md'
+import { MdDelete } from 'react-icons/md'
 import { FaEdit, FaEye } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContext } from 'react';
@@ -25,7 +25,7 @@ function CourseRow({ course, loadReport }) {
     };
 
     return (
-        <div className='bg-white hover:bg-gray-100 flex border-b-2 last:border-b-0'>
+        <div className='bg-white hover:bg-gray-100 transition-colors flex border-b-2 last:border-b-0'>
             <div className='w-32 py-1.5 text-center'>{ code }</div>
             <div className='w-96 py-1.5 text-center'>{ name }</div>
             <div className='w-32 py-1.5 text-center'>{ credits }</div>

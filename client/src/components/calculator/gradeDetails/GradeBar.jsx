@@ -12,7 +12,7 @@ function GradeBar({ grade, handleOnClick }) {
             <div
                 onClick={() => handleOnClick(grade)}
                 style={{ width: `${30 * value / 20}rem` }}
-                className={`h-6 ${value < 10 ? 'bg-red-600 hover:bg-red-700' : 'bg-lime-600 hover:bg-lime-700'} mr-2 cursor-pointer duration-200`}
+                className={`h-6 ${value < 10 ? 'bg-red-600 hover:bg-red-700' : 'bg-lime-600 hover:bg-lime-700'} mr-2 cursor-pointer duration-200 transition-colors`}
             />
 
             <span>{value}</span>

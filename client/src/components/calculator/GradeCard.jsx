@@ -8,7 +8,7 @@ function GradeCard({ grade, selectedGrade, handleOnClick, loadCourseGrades, root
             <div 
                 onClick={() => handleOnClick(grade)}
                 className={`
-                w-72 px-3 py-1 hover:bg-gray-200 duration-200
+                w-72 px-3 py-1 hover:bg-gray-200 duration-200 transition-colors
                 ${grade.id === selectedGrade.id && 'outline outline-primary-500/50'}
                 ${weight ? 'bg-white' : 'bg-gray-300 text-gray-600'}
                 flex justify-between

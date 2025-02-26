@@ -4,6 +4,7 @@ import ReportCard from '../components/reports/ReportCard';
 
 function Reports() {
     const [user, setUser] = useState(null);
+    const [selectedMenu, setSelectedMenu] = useState(null);
 
     const loadUser = () => {
         fetch(`${import.meta.env.VITE_API_URL}/users`)
@@ -21,7 +22,14 @@ function Reports() {
                 <NewReport loadUser={loadUser}/>
                 
                 {
-                    user && user.reports.map(report => <ReportCard report={report} key={report.id}/>)
+                    user && user.reports.map(report => (
+                        <ReportCard
+                            key={report.id}
+                            report={report}
+                            selectedMenu={selectedMenu}
+                            setSelectedMenu={setSelectedMenu}
+                        />
+                    ))
                 }
             </div>
         </>
