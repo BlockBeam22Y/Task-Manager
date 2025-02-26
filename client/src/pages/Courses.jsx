@@ -14,7 +14,7 @@ function Courses() {
         <>
             <h2 className='w-full text-center text-5xl font-medium'>Cursos</h2>
 
-            <div className='relative'>
+            <div className='relative shadow-md'>
                 <CourseHeader/>
                 
                 {
@@ -29,7 +29,7 @@ function Courses() {
                                 />
                             ))
                     ) : (
-                        <div className='w-full bg-white text-center border-2 border-t-0 border-primary-500 py-1.5'>
+                        <div className='w-full bg-white text-center py-1.5'>
                             No se han encontrado cursos
                         </div>
                     )

@@ -26,14 +26,14 @@ function Tasks() {
         <>
             <h2 className='w-full text-center text-5xl font-medium'>Tareas</h2>
 
-            <div className='bg-white relative'>
+            <div className='bg-white relative shadow-md'>
                 <TaskHeader/>
 
                 {
                     tasks.length ? (
                         tasks.map(task => <TaskRow key={task.id} task={task} />)
                     ) : (
-                        <div className='py-1 border-gray-200 text-center'>
+                        <div className='py-1 border-gray-200 text-center text-sm'>
                             No se han encontrado tareas
                         </div>
                     )

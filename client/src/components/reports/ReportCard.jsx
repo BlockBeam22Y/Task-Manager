@@ -6,15 +6,14 @@ function ReportCard({ report }) {
     const openedAt = new Date(report.openedAt);
 
     return (
-        <a
-            href={`/reports/${id}/courses`}
+        <div
             className='
                 w-56 h-56 
                 bg-[#A294F9]
                 flex flex-col justify-end 
-                shadow-md hover:shadow-lg cursor-pointer'
-        >
-            <div className='bg-white p-2 gap-1 flex flex-col justify-between items-center'>
+                shadow-md hover:shadow-lg relative
+        '>   
+            <div className='bg-white p-2 gap-3 flex flex-col justify-between items-center'>
                 <h3 className='w-full font-medium text-lg text-center text-nowrap text-ellipsis overflow-hidden'>
                     { name }
                 </h3>
@@ -35,13 +34,15 @@ function ReportCard({ report }) {
                             </div>
                         )
                     }
-                    
-                    <div className='p-1 rounded-full hover:bg-gray-200 ease-in duration-100'>
-                        <SlOptionsVertical/>
-                    </div>
                 </div>
             </div>
-        </a>
+
+            <a href={`/reports/${id}/courses`} className='w-full h-full absolute'/>
+
+            <button className='p-1 rounded-full hover:bg-gray-200/50 ease-in duration-100 absolute right-1 bottom-1 z-100'>
+                <SlOptionsVertical/>
+            </button>
+        </div>
     );
 }
 
