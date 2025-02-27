@@ -65,7 +65,7 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
                             disabled={weight === 1}
                             className='
                             w-7 h-7
-                            bg-gray-300 text-gray-600
+                            bg-gray-300 text-gray-600 transition-colors
                             hover:bg-gray-400 hover:text-gray-700
                             active:bg-gray-200 active:text-gray-500
                             disabled:bg-gray-200 disabled:text-gray-500
@@ -87,7 +87,7 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
                             onClick={() => setWeight(weight + 1)}
                             className='
                             w-7 h-7
-                            bg-gray-300 text-gray-600
+                            bg-gray-300 text-gray-600 transition-colors
                             hover:bg-gray-400 hover:text-gray-700
                             active:bg-gray-200 active:text-gray-500
                             disabled:bg-gray-200 disabled:text-gray-500
@@ -114,7 +114,7 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
                     onClick={handleOnSubmit}
                     disabled={!name || isPending}
                     className='
-                    bg-primary-500 text-white font-medium
+                    bg-primary-500 text-white font-medium transition-colors
                     hover:bg-primary-600 hover:text-gray-100
                     active:bg-primary-400 active:text-white
                     disabled:bg-primary-400 disabled:text-white

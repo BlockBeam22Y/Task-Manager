@@ -57,7 +57,7 @@ function DeleteGradeModal({ grade, rootId, loadCourseGrades }) {
                 <button
                     onClick={() => setModal(null)}
                     className='
-                    bg-white text-primary-500 font-medium
+                    bg-white text-primary-500 font-medium transition-colors
                     hover:bg-gray-100 hover:text-primary-600
                     active:bg-white active:text-primary-400
                     border border-primary-500
@@ -71,7 +71,7 @@ function DeleteGradeModal({ grade, rootId, loadCourseGrades }) {
                     onClick={handleOnSubmit}
                     disabled={isPending}
                     className='
-                    bg-red-500 text-white font-medium
+                    bg-red-500 text-white font-medium transition-colors
                     hover:bg-red-600 hover:text-gray-100
                     active:bg-red-400 active:text-white
                     disabled:bg-red-400 disabled:text-white

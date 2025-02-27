@@ -15,7 +15,7 @@ function NewTask({ loadTasks, selectedReport }) {
                 />
             )}
             className='
-            bg-primary-500 text-white font-medium
+            bg-primary-500 text-white font-medium transition-colors
             hover:bg-primary-600 active:bg-primary-400
             hover:text-gray-100 active:text-white
             p-2 pr-3 gap-1 rounded-md

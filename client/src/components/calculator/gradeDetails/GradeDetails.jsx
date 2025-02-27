@@ -110,7 +110,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                                 onClick={handleOnClickDown}
                                 className='
                                 w-7 h-7
-                                bg-gray-300 text-gray-600
+                                bg-gray-300 text-gray-600 transition-colors
                                 hover:bg-gray-400 hover:text-gray-700
                                 active:bg-gray-200 active:text-gray-500
                                 disabled:bg-gray-200 disabled:text-gray-500
@@ -128,7 +128,7 @@ function GradeDetails({ grade, handleOnClick, loadCourseGrades, rootId }) {
                                 onClick={handleOnClickUp}
                                 className='
                                 w-7 h-7
-                                bg-gray-300 text-gray-600
+                                bg-gray-300 text-gray-600 transition-colors
                                 hover:bg-gray-400 hover:text-gray-700
                                 active:bg-gray-200 active:text-gray-500
                                 disabled:bg-gray-200 disabled:text-gray-500

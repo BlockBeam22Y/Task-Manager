@@ -9,8 +9,8 @@ function SidebarLink({ link, reportId }) {
             <a
                 href={`/reports/${reportId}${route}`}
                 className={`${
-                    new RegExp(`^/reports/${reportId}${route}`).test(location.pathname) && 'bg-gray-100'
-                } hover:bg-gray-100 active:bg-gray-200 px-4 py-2 flex items-center gap-2`}
+                    new RegExp(`^/reports/${reportId}${route}`).test(location.pathname) && 'bg-gray-200'
+                } hover:bg-gray-100 active:bg-gray-200 transition-colors px-4 py-2 flex items-center gap-2`}
                 >
                 { icon }
                 <span>{ name }</span>

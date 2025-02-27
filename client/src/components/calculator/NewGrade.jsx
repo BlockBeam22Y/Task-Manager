@@ -14,7 +14,7 @@ function NewGrade({ grade, loadCourseGrades, rootId }) {
                 rootId={rootId}
             />)}
             className='
-            w-8 h-8 rounded-md mt-5 shadow-md
+            w-8 h-8 rounded-md mt-5 shadow-md transition-colors
             bg-gray-300 text-gray-600 opacity-60 hover:opacity-75 active:opacity-50
             flex justify-center items-center
         '>

@@ -54,7 +54,7 @@ function ReportCard({ report, selectedMenu, setSelectedMenu, loadUser }) {
 
             <button
                 onClick={() => setSelectedMenu(selectedMenu === id ? null : id)}
-                className='p-1 rounded-full hover:bg-gray-200/50 ease-in duration-100 absolute right-1 bottom-1 z-100'
+                className='p-1 rounded-full hover:bg-gray-200/75 transition-colors duration-100 absolute right-1 bottom-1 z-100'
             >
                 <SlOptionsVertical className='w-4 h-4'/>
             </button>

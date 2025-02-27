@@ -16,7 +16,7 @@ function DeleteGrade({ grade, rootId, loadCourseGrades }) {
                 />
             )}
             className='
-            bg-red-500 text-white font-medium
+            bg-red-500 text-white font-medium transition-colors
             hover:bg-red-600 hover:text-gray-100
             active:bg-red-400 active:text-white
             p-2 pr-3 gap-1 rounded-md

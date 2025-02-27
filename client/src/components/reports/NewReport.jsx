@@ -10,7 +10,7 @@ function NewReport({ loadUser }) {
         <button
             onClick={() => setModal(<CreateReportModal loadUser={loadUser}/>)}
             className='
-            w-56 h-56 rounded-2xl
+            w-56 h-56 rounded-2xl transition-colors
             bg-gray-300 text-gray-600 opacity-60 hover:opacity-75 active:opacity-50
             flex justify-center items-center relative
         '>

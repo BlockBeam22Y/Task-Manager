@@ -53,7 +53,7 @@ function Layout({ modal }) {
                         onClick={() => setModal(null)}
                         className='
                         absolute -top-3 -right-3 rounded-full
-                        text-white bg-black
+                        text-white bg-black transition-colors duration-50
                         hover:text-gray-200 hover:bg-red-600
                         active:text-gray-100 active:bg-red-500
                     '>
