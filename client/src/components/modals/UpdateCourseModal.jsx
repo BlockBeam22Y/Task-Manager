@@ -129,7 +129,7 @@ function UpdateCourseModal({ course, loadReport }) {
                 <button
                     onClick={() => setModal(null)}
                     className='
-                    bg-white text-primary-500 font-medium transition-colors
+                    bg-white text-primary-500 font-medium transition-colors duration-100
                     hover:bg-gray-100 hover:text-primary-600
                     active:bg-white active:text-primary-400
                     border border-primary-500
@@ -147,7 +147,7 @@ function UpdateCourseModal({ course, loadReport }) {
                         isPending
                     }
                     className='
-                    bg-primary-500 text-white font-medium transition-colors
+                    bg-primary-500 text-white font-medium transition-colors duration-100
                     hover:bg-primary-600 hover:text-gray-100
                     active:bg-primary-400 active:text-white
                     disabled:bg-primary-400 disabled:text-white

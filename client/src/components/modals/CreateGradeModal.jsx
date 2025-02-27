@@ -114,7 +114,7 @@ function CreateGradeModal({ grade, loadCourseGrades, rootId }) {
                     onClick={handleOnSubmit}
                     disabled={!name || isPending}
                     className='
-                    bg-primary-500 text-white font-medium transition-colors
+                    bg-primary-500 text-white font-medium transition-colors duration-100
                     hover:bg-primary-600 hover:text-gray-100
                     active:bg-primary-400 active:text-white
                     disabled:bg-primary-400 disabled:text-white

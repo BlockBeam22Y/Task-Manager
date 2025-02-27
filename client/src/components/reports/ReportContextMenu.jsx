@@ -39,7 +39,7 @@ function ReportContextMenu({ report, setSelectedMenu, loadUser }) {
             <li
                 onClick={() => {
                     setSelectedMenu(null);
-                    setModal(<DeleteReportModal />);
+                    setModal(<DeleteReportModal report={report} loadUser={loadUser} />);
                 }}
                 className='px-2 py-1 text-nowrap flex items-center flex-nowrap gap-1.5 rounded hover:bg-gray-100 transition-colors cursor-pointer'
             >
