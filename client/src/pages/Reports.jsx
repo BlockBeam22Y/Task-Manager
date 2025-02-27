@@ -28,6 +28,7 @@ function Reports() {
                             report={report}
                             selectedMenu={selectedMenu}
                             setSelectedMenu={setSelectedMenu}
+                            loadUser={loadUser}
                         />
                     ))
                 }

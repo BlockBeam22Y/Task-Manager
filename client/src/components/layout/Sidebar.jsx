@@ -14,9 +14,11 @@ function Sidebar({ report }) {
                 <span>{ name }</span>
             </h3>
 
-            {
-                sidebarLinks.map(link => <SidebarLink key={link.name} link={link} reportId={id} />)
-            }
+            <ul>
+                {
+                    sidebarLinks.map(link => <SidebarLink key={link.name} link={link} reportId={id} />)
+                }
+            </ul>
         </aside>
     );
 }

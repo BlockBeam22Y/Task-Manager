@@ -1,14 +1,35 @@
 import { useContext, useState } from 'react';
 import { ModalContext } from '../../App';
+import RequestErrorMessage from '../layout/RequestErrorMessage';
 
-function UpdateReportModal() {
-    const [name, setName] = useState('');
+function UpdateReportModal({ report, loadUser }) {
+    const [name, setName] = useState(report.name);
     
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
     const setModal = useContext(ModalContext);
 
-    const handleOnSubmit = () => {};
+    const handleOnSubmit = () => {
+        setIsPending(true);
+        setIsError(false);
+
+        fetch(`${import.meta.env.VITE_API_URL}/reports/${report.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name })
+        })
+            .then(res => {
+                if (!res.ok) 
+                    throw new Error('Something went wrong');
+                    
+                setModal(null);
+                loadUser();
+            })
+            .catch(() => setIsError(true))
+            .finally(() => setIsPending(false));
+    };
 
     return (
         <>
@@ -27,7 +48,7 @@ function UpdateReportModal() {
 
             { isError && <RequestErrorMessage/> }
 
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center gap-2'>
                 <button
                     onClick={() => setModal(null)}
                     className='

@@ -2,7 +2,7 @@ import { SlOptionsVertical } from 'react-icons/sl'
 import '@github/relative-time-element'
 import ReportContextMenu from './ReportContextMenu';
 
-function ReportCard({ report, selectedMenu, setSelectedMenu }) {
+function ReportCard({ report, selectedMenu, setSelectedMenu, loadUser }) {
     const { name, id } = report;
     const openedAt = new Date(report.openedAt);
 
@@ -42,7 +42,13 @@ function ReportCard({ report, selectedMenu, setSelectedMenu }) {
 
             <div className='w-6 h-6 absolute right-1 bottom-1'>
                 {
-                    selectedMenu === id && <ReportContextMenu report={report} />
+                    selectedMenu === id && (
+                        <ReportContextMenu
+                            report={report}
+                            setSelectedMenu={setSelectedMenu}
+                            loadUser={loadUser}
+                        />
+                    )
                 }
             </div>
 

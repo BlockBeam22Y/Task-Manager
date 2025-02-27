@@ -57,4 +57,10 @@ export class ReportsService {
 
         return this.reportsRepository.save(report);
     }
+
+    async updateReport(id: string, name: string) {
+        await this.reportsRepository.update(id, { name });
+
+        return id;
+    }
 }
