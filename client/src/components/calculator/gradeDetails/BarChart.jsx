@@ -6,7 +6,7 @@ function BarChart({ grade, handleOnClick }) {
     return (
         <div>
             {
-                children.length > 0 && (
+                children.filter(grade => grade.weight > 0).length > 0 && (
                     <div className='border-b-2 border-black'>
                         {
                             children

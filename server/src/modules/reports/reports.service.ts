@@ -67,7 +67,7 @@ export class ReportsService {
     async deleteReport(id: string) {
         const report = await this.reportsRepository.findOneBy({ id });
 
-        await this.reportsRepository.remove(report);
+        await this.reportsRepository.delete(report);
         return id;
     }
 }

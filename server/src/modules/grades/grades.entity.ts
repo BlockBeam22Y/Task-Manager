@@ -33,7 +33,9 @@ export class Grade {
     })
     children?: Grade[];
 
-    @TreeParent()
+    @TreeParent({
+        onDelete: 'CASCADE'
+    })
     parent: Grade;
 
     @ManyToOne(() => Course, (course) => course.grades, {

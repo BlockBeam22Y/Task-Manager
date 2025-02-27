@@ -72,7 +72,7 @@ export class CoursesService {
             }
         });
 
-        await this.coursesRepository.remove(course);
+        await this.coursesRepository.delete(course);
 
         const report = await this.reportsRepository.findOne({
             where: { id: course.report.id },
