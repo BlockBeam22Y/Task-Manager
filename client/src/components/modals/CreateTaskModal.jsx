@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import RequestErrorMessage from '../layout/RequestErrorMessage';
 import { ModalContext } from '../../App';
+import getTomorrowDate from '../../utils/getTomorrowDate';
 
 function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, loadTasks }) {
     const [formData, setFormData] = useState({
@@ -109,6 +110,7 @@ function CreateTaskModal({ grade, loadCourseGrades, rootId, selectedReport, load
                     <input
                         type='date'
                         name='date'
+                        min={getTomorrowDate()}
                         value={formData.date}
                         onChange={handleOnChange}
                         className='h-7 border border-black/25 rounded px-2'
