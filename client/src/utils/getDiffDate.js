@@ -1,5 +1,5 @@
-function getTomorrowDate() {
-    const tomorrow = new Date(new Date().valueOf() + 24 * 3600 * 1000);
+function getDiffDate(diff) {
+    const tomorrow = new Date(new Date().valueOf() + 24 * 3600 * 1000 * diff);
     const year = tomorrow.getFullYear();
     const month = tomorrow.getMonth() + 1;
     const date = tomorrow.getDate();
@@ -11,4 +11,4 @@ function getTomorrowDate() {
     );
 }
 
-export default getTomorrowDate;
+export default getDiffDate;
